@@ -1,0 +1,38 @@
+{{extend 'layout.html'}}
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jsTree test</title>
+  <!-- 2 load the theme CSS file -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
+</head>
+<body>
+
+  <h2>Taxonomic Tree for Arthropod Pests and Crops in Micronesia</h2>
+  {{=form}}
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
+
+  <input type="button" value="Expand All" onclick="$('#tree').jstree('open_all');">
+  <input type="button" value="Collapse All" onclick="$('#tree').jstree('close_all');">
+  <div id="tree"></div>
+
+  <script>
+  $(function () {
+    $('#tree').jstree({ 'core' : {
+        'data' : {{ =XML(m) }}
+    } });
+  });
+
+  $('#tree').on("select_node.jstree", function (e, data) {
+    var id = data.instance.get_node(data.selected[0]).id;
+    var gbif_url = "http://www.gbif.org/species/".concat(id)
+    console.log(gbif_url);
+    window.open(gbif_url);
+  });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+    <header class="container-fluid background">
+      <div class="jumbotron text-center">
+        {{if response.title:}}
+        <h1>{{=response.title}}
+          <small>{{=response.subtitle or ''}}</small></h1>
+        {{pass}}
+      </div>
+    </header>
+{{end}}
+
+<h2>{{=message}}</h2>
+
+<p class="lead">{{=T('What is the purpose of this app?')}}</p>
+
+The purpose of this app is to improve the
+{{=A(XML('<b>List of Pests Attacking Crops in Micronesia</b>'),
+  _href='https://aubreymoore.github.io/crop-pest-list/list.html')}}
+
+<h3>Step 1 - Harvest names from the pest list URL using the the global names resolver.
+</h3>
+{{=A(XML('<b>doit</b>'), _href='/pestlist/default/doit')}}
+
+The JSON data returned from GNR are stored in <b>db.extracted_names.extracted_names_json</b>.
+
+<h3>Step 2 - Build a hierarchical taxonomic list for both crops and pests and store this in the <b>taxon2</b>
+database table.
+</h3>
+{{=A(XML('<b>parse_resolved_names2</b>'), _href='/pestlist/default/parse_resolved_names2')}} (takes awhile)
+
+<h3>Step 3 - Display taxonomic tree.</h3>
+{{=A(XML('<b>display_taxonomic_tree</b>'), _href='/pestlist/default/display_taxonomic_tree')}}

@@ -1,0 +1,26 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+    <header class="container-fluid background">
+      <div class="jumbotron text-center">
+        {{if response.title:}}
+        <h1>{{=response.title}}
+          <small>{{=response.subtitle or ''}}</small></h1>
+        {{pass}}
+      </div>
+    </header>
+{{end}}
+
+<h2>{{=message}}</h2>
+<p class="lead">{{=T('What is the purpose of this app?')}}</p>
+<p>The purpose of this app is to improve the <a href="https://aubreymoore.github.io/crop-pest-list/list.html">List of Pests Attacking Crops in Micronesia</a>.</p>
+
+<h3>Step 1 - Harvest names from the pest list URL using the the global names resolver.
+</h3>
+<a href="http://127.0.0.1:8000/pestlist/default/doit">doit</a>
+
+The JSON data returned from GNR are stored in <b>db.extracted_names.extracted_names_json</b>.
+
+<h3>Step 2 - Build a hierarchical taxonomic list for both crops and pests.
+</h3>
+<a href="http://127.0.0.1:8000/pestlist/default/parse_extracted_names">parse_extracted_names</a> (takes awhile)

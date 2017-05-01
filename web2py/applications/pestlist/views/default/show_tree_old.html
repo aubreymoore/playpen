@@ -1,0 +1,63 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+{% load mptt_tags %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+  <style>
+    .genus {font-style:italic}
+    .species {font-style:italic}
+    body {
+    		margin-right: 10%;
+    		margin-left:  10%;
+    	}
+  </style>
+</head>
+
+<body>
+
+<h1>Taxonomic tree</h1>
+
+<form method="GET">
+    Root taxon (type 'root' to see complete tree):<br>
+    <input type="text" name="taxon" value="{{ taxon }}">
+    <input type="submit" value="Submit" />
+    {% if error_msg %}
+      {{ error_msg }}
+    {% endif %}
+</form><br/><br/>
+
+<input type="button" value="Expand All" onclick="$('#tree').jstree('open_all');">
+<input type="button" value="Collapse All" onclick="$('#tree').jstree('close_all');">
+
+<div id="tree">
+  <ul>
+      {% recursetree nodes %}
+          <li>
+              {{ node.rank }} <b><span class="{{node.rank}}">{{ node.name }}</span></b>
+              {% if not node.is_leaf_node %}
+                  <ul class="children">
+                      {{ children }}
+                  </ul>
+              {% endif %}
+          </li>
+      {% endrecursetree %}
+  </ul>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+<script>
+$(function(){
+  $('#tree').jstree();
+});
+</script>
+
+</body>
+</html>

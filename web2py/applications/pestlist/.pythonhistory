@@ -1,0 +1,116 @@
+db.tables()
+db.extracted_names.
+db.extracted_names.count()
+rows = db.extracted_names.select()
+x = db.extracted_names()
+x
+x.select()
+db.extracted_names.insert('caca')
+db.extracted_names.insert('caca',)
+db(db.extracted_names).select()
+len(db(db.extracted_names).select())
+db.extracted_names.insert('caca')
+db(db.extracted_names).insert('caca')
+db.extracted_names.extracted_names_json.insert('caca')
+db.extracted_names.insert(extracted_names_json = 'caca')
+len(db(db.extracted_names).select())
+db.extracted_names.insert(extracted_names_json = 'caca')
+len(db(db.extracted_names).select())
+quit()
+doit()
+import default
+ls
+locals()
+import default.py
+import default
+import default.py
+import controllers/default.py
+quit()
+doit()
+x = parse_extracted_names
+type(x)
+x
+x = parse_extracted_names()
+type(x)
+x[0]
+x['results']
+x
+x.keys()
+y = x['resolved_names']
+y[1]
+y.keys()
+type(y)
+y[0]
+quit()
+for key in x.keys():
+   print(key, type(x[key]))
+x = parse_extracted_names()
+type(x)
+x.keys()
+for key in x.keys():
+   print(key, type(x[key])
+)
+for key in x.keys():
+   print(key, type(x[key]))
+reseolved_names_list = x['resolved_names']
+resolved_names_list = x['resolved_names']
+type(resolved_names_list)
+resolved_names_list[0]
+type(resolved_names_list[0])
+resolved_names_list.keys()
+resolved_names_list[0].keys()
+type(resolved_names_list[0].keys())
+for key in resolved_names_list[0].keys:
+   print key, type(resolved_names_list[0][key]
+)
+for key in resolved_names_list[0].keys:
+   print key, type(resolved_names_list[0][key])
+type(resolved_names_list[0])
+y = resolved_names_list[0]
+type(y)
+for key in y.keys():
+   print key, type(y[key])
+y
+y[0]
+y['results']
+y['results'][0]
+parse_extracted_names()
+clear
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+x = db(db.extracted_names).select()[0]['extracted_names_json']
+x
+x = db(db.extracted_names).select()[0]['extracted_names_json']['resolved_names']
+x
+x = db(db.extracted_names).select()[0]['extracted_names_json']['resolved_names']
+quit()
+parse_extracted_names()
+quit()
+parse_extracted_names()
+parse_resolved_names()
+quit()
+parse_resolved_names()
+quit()

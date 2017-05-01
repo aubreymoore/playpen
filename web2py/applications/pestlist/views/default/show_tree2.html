@@ -1,0 +1,43 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+  <style>
+    .genus {font-style:italic}
+    .species {font-style:italic}
+    body {
+    		margin-right: 10%;
+    		margin-left:  10%;
+    	}
+  </style>
+</head>
+
+<body>
+
+<h1>This is show_tree2x</h1>
+
+<div id="using_json_2" class="demo">
+						</div>
+						<script>
+						$(function () {
+							$('#using_json_2').jstree({ 'core' : {
+							    'data' : [
+							       { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
+							       { "id" : "ajson2", "parent" : "#", "text" : "Root node 2", "state" : { "opened" : true } },
+							       { "id" : "ajson3", "parent" : "ajson2", "text" : "Child 1" },
+							       { "id" : "ajson4", "parent" : "ajson2", "text" : "Child 2" }
+							    ]
+							} });
+						});</script>
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+</body>
+</html>
