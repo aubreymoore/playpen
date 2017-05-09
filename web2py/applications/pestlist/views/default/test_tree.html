@@ -1,0 +1,94 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+</head>
+
+<body>
+  <h1>test_tree.html</h1>
+
+  Selected node:
+  <b><div id='mytext'>None</div></b>
+
+  <br>
+
+   <input
+     type='button'
+     value='Create child node'
+     onclick='create_child_node()'
+   >
+
+  <br><br>
+
+   <input
+     type="button"
+     value="Expand all"
+     onclick="$('#jstree').jstree('open_all');"
+   >
+
+   <input
+     type="button"
+     value="Collapse all"
+     onclick="$('#jstree').jstree('close_all');"
+   >
+
+  <br><br>
+
+  <div id="jstree" style="overflow:scroll; height:400px;">
+    <ul>
+      <li id="root_node_1">Root node 1
+        <ul>
+          <li id="child_node_1">Child node 1</li>
+          <li>Child node 2</li>
+        </ul>
+      </li>
+      <li>Root node 2</li>
+    </ul>
+  </div>
+  <br>
+
+  <input
+    type="button"
+    value="Select child_node_1"
+    onclick="$('#jstree').jstree('select_node', 'child_node_1');"
+  >
+
+
+  <br>
+  <br>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+  <!-- <script>
+    $(function() {
+
+      $('#jstree').jstree({plugins: ['contextmenu'], core:{multiple: false} });
+
+      $('#jstree').on("changed.jstree", function(e, data) {
+        console.log(data.selected);
+        document.getElementById('mytext').innerHTML = data.selected;
+      })
+
+    });
+  </script> -->
+
+  <script>
+
+  $('#jstree').jstree({plugins: ['contextmenu'], core:{multiple: false} });
+
+  $('#jstree').on("changed.jstree", function(e, data) {
+    //console.log(data.selected);
+    document.getElementById('mytext').innerHTML = data.selected; })
+
+  function create_child_node() {
+      //document.getElementById("mytext").innerHTML = "creation of child node requested";
+      window.open ('create_child_node','_self',false)
+  }
+
+  </script>
+
+</body>
+
+</html>

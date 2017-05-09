@@ -132,9 +132,26 @@ auth.settings.reset_password_requires_verification = True
 # -------------------------------------------------------------------------
 
 
+'''
+This table contains a schema for recoding location data. In the original pest
+list, codes such as "M=G", "M=RG", "B=?". and "Y=n" were  used. A set of codes
+was extracted from the HTML using pestlist/default/extract_locations. Note that
+some codes, such as "M=RG" require two records, one for Rota and one for Guam.
+This table can be used to build a geographic distribution table by parsing
+the pest list HTML.
+'''
+db.define_table('location_recode',
+    Field('raw_string'),
+    Field('location'),
+    Field('confirmed', type='boolean'),
+    Field('new_island_record', type='boolean')
+)
+
+
 db.define_table('extracted_names',
     Field('extracted_names_json', 'json'),
 )
+
 
 db.define_table('taxon',
                 Field('tid', unique=True),
@@ -142,14 +159,71 @@ db.define_table('taxon',
                 Field('trank'),
                 Field('parent_tid', 'reference taxon.tid'))
 
+
+'''
+taxon2
+'''
 db.define_table('taxon2',
-                Field('tid', unique=True),
-                Field('parent_tid'),
-                Field('name'),
-                Field('trank'),
-                Field('lineage'),
+    Field('tid', unique=True),
+    Field('parent_tid'),
+    Field('name'),
+    Field('trank', compute=lambda r: compute_taxon_rank(r['parent_tid'])),
+    Field('lineage', compute=lambda r: compute_taxon_lineage(r['parent_tid'], r['name'])),
+    format='%(name)s'
+)
+# For root nodes, parent_tid is NULL; otherwise parent_node must refer to an existing tid
+db.taxon2.parent_tid.requires = IS_NULL_OR(IS_IN_DB(db, 'taxon2.tid', '%(name)s'))
+
+def compute_taxon_lineage(parent_tid, name):
+    rows = db(db.taxon2.tid==parent_tid).select(db.taxon2.lineage)
+    if len(rows) > 0:
+        s = '{}|{}'.format(rows[0]['lineage'], name)
+    else:
+        s = name
+    return s
+
+def compute_taxon_rank(parent_tid):
+    ranks = ['kingdom','phylum','class','order','family','genus','species','subspecies']
+    rows = db(db.taxon2.tid==parent_tid).select(db.taxon2.lineage)
+    if len(rows) > 0:
+        n = len(rows[0].lineage.split('|'))
+        s = ranks[n]
+    else:
+        s = 'kingdom'
+    return s
+
+
+
+'''
+syn
+'''
+db.define_table('syn',
+    Field('taxon', 'reference taxon2'),
+    Field('synonym')
+)
+
+
+'''
+geo
+'''
+def compute_lineage(parent_name, name):
+    rows = db(db.geo.name==parent_name).select(db.geo.lineage)
+    if len(rows) > 0:
+        s = '{}|{}'.format(rows[0]['lineage'], name)
+    else:
+        s = name
+    return s
+
+db.define_table('geo',
+                Field('name', unique=True),
+                Field('parent_name'),
+                Field('lineage', compute=lambda r: compute_lineage(r['parent_name'], r['name'])),
                 format='%(name)s'
                )
+# For root node, parent_gid is NULL; otherwise parent_node must refer to an existing gid
+db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
+
+
 
 db.define_table('associate2',
                 Field('t1', db.taxon2),

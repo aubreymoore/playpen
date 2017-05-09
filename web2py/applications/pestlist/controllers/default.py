@@ -1,5 +1,32 @@
 # -*- coding: utf-8 -*-
 
+def find_taxon2_problems():
+    s = ''
+    ranks = {
+        'kingdom': 1,
+        'phylum':  2,
+        'class':   3,
+        'order':   4,
+        'family':  5,
+        'genus':   6,
+        'species': 7,
+        'subspecies': 8
+    }
+    for row in db(db.taxon2).select():
+        n = len(row.lineage.split('|'))
+        if n != ranks[row.trank]:
+            s += '{} {} {} {}<br>'.format(
+                row.tid, row.trank, row.name, row.lineage)
+    return s
+
+
+def test_tree():
+    return dict()
+
+
+def create_child_node():
+    return dict()
+
 
 def display_taxonomic_tree():
     import json
@@ -22,10 +49,16 @@ def display_taxonomic_tree():
             rows = db(db.taxon2).select(orderby=db.taxon2.lineage)
         else:
             rows = db(db.taxon2.lineage.contains(root_taxon)).select(orderby=db.taxon2.lineage)
-            rows[0].parent_tid = '#'
+        rows[0].parent_tid = '#' # required by jstree to indicate a root node
+
+        # MAYBE THE FOLLOWING SHOULD BE MOVED INTO THE VIEW (display_taxonomic_tree)
 
         mylist = []
         for row in rows:
+            # if parent_tid is null, replace with '#'
+            if row.parent_tid is None:
+                row.parent_tid = '#'
+
             if row.trank in ['genus','species']:
                 text = '{} <b><i>{}</i></b>'.format(row.trank, row.name)
             else:
@@ -38,6 +71,89 @@ def display_taxonomic_tree():
     else:
         response.flash = 'Please select a root taxon and press "SUBMIT QUERY".'
     return dict(form=form, m=m)
+
+
+def display_tax_tree():
+    import json
+    # Important: root nodes must have 'parent':'#'
+    m = None
+    #root_taxon = ''
+
+    form=FORM('Root taxon (leave blank to include all taxa):',
+        INPUT(_name='root_taxon'),
+        INPUT(_type='submit'),
+    )
+
+    if form.accepts(request,session):
+
+        root_taxon = form.vars.root_taxon
+        print(root_taxon)
+
+        #level_dict = {'kingdom':1,'phylum':2,'class':3,'order':4,'family':5,'genus':6,'species':7}
+        if root_taxon == '':
+            rows = db(db.taxon2).select(orderby=db.taxon2.lineage)
+        else:
+            rows = db(db.taxon2.lineage.contains(root_taxon)).select(orderby=db.taxon2.lineage)
+        rows[0].parent_tid = '#' # required by jstree to indicate a root node
+
+        # MAYBE THE FOLLOWING SHOULD BE MOVED INTO THE VIEW (display_taxonomic_tree)
+
+        mylist = []
+        for row in rows:
+            # if parent_tid is null, replace with '#'
+            if row.parent_tid is None:
+                row.parent_tid = '#'
+
+            if row.trank in ['genus','species']:
+                text = '{} <b><i>{}</i></b>'.format(row.trank, row.name)
+            else:
+                text = '{} <b>{}</b>'.format(row.trank, row.name)
+            mylist.append({'id':row.tid,'parent':row.parent_tid,'text':text})
+        m = json.dumps(mylist)
+
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'Please select a root taxon and press "SUBMIT QUERY".'
+    return dict(form=form, m=m)
+
+
+def display_geo_tree():
+    import json
+    m = None
+    first_node_id = None
+    mylist = []
+
+    form=FORM('Root location (leave blank to include all locations):',
+        INPUT(_name='root_taxon'),
+        INPUT(_type='submit', _value='Load tree'),
+    )
+
+    if form.accepts(request,session):
+
+        root_taxon = form.vars.root_taxon
+        print(root_taxon)
+
+        if root_taxon == '':
+            rows = db(db.geo).select(orderby=db.geo.lineage)
+        else:
+            rows = db(db.geo.lineage.contains(root_taxon)).select(orderby=db.geo.lineage)
+        rows[0].parent_name = '#' # required by jstree to indicate a root node
+
+        #mylist = []
+        for row in rows:
+            # if parent_tid is null, replace with '#'
+            if row.parent_name is None:
+                row.parent_name = '#'
+            mylist.append({'id':row.name,'parent':row.parent_name,'text': row.name})
+        m = json.dumps(mylist)
+
+    elif form.errors:
+        response.flash = 'form has errors'
+
+    if mylist:
+      first_node_id = mylist[0]['id']
+    return dict(form=form, m=m, first_node_id=first_node_id)
 
 
 def populate_resolved_names_table():
@@ -160,7 +276,77 @@ def annotate2():
             s = s.replace(supplied_name_string,
                     '{} <a href="http://www.gbif.org/species/{}">{}</a>'
                         .format(supplied_name_string, taxon_id, taxon_id))
+
+    # Now, we replace names not included in the nub taxonomy
+
+    for row in db(db.taxon2.tid.startswith('AM')).select():
+        # Check that row is a leaf node; will not work if name is used for multiple taxa
+        if db(db.taxon2.lineage.contains(row.name)).count() == 1:
+            s = s.replace(row.name, '{} <b>{}</b>'.format(row.name, row.tid))
     return s
+
+
+def annotate_taxa():
+    import urllib2
+    # Download pestlist web page as a string.
+    f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
+    s = f.read().decode('utf-8')
+    for row in db(db.taxon2.id > 0).select():
+        '''
+        We need a better way to determine if a *name* is a leaf node.
+        A taxon is a leaf node if it has no children:
+        i.e. There should be no records where *parent_tid* referes to this taxon.
+        '''
+        if db(db.taxon2.parent_tid==row.tid).count()==0:
+            #if row.name==row.lineage.split('|')[-1]:
+            #if db(db.taxon2.lineage.contains(row.name)).count() == 1:
+            s = s.replace(row.name, '{}<span style="color:red"> {}</span>'
+            .format(row.name, row.tid))
+
+    # Check synonyms
+    for row in db(db.syn.id > 0).select():
+            s = s.replace(row.synonym, '{}<span style="color:green"> {}</span>'
+            .format(row.synonym, row.taxon.tid))
+
+    return s
+
+
+def annotate_locations():
+    import urllib2
+    # Download pestlist web page as a string.
+    f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
+    s = f.read().decode('utf-8')
+    for row in db(db.location_recode.id > 0).select():
+        s = s.replace(row.raw_string,
+        '''{}<span style="color:blue"> <b>{}</b> confirmed:<b>{}
+        </b> new_island_record:<b>{}</b></span>'''
+        .format(
+            row.raw_string,
+            row.location,
+            row.confirmed,
+            row.new_island_record)
+        )
+    return s
+
+
+
+def extract_locations():
+    import urllib2
+    import re
+
+    # Download pestlist web page as a string.
+    f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
+    s = f.read().decode('utf-8')
+
+    matches = re.findall(r'\s(.=.*)\s', s)
+    m = set(matches)
+    s = ''
+    for item in list(m):
+        s += '{}<br>'.format(item)
+
+    return s
+
+
 
 
 def get_extracted_names():

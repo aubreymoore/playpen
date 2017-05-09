@@ -298,3 +298,54 @@ TRUNCATE TABLE resolved_names ;
 success!
 TRUNCATE TABLE resolved_names ;
 success!
+timestamp: 2017-05-01T14:01:02.427891
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-05-01T14:01:58.632177
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-05-05T08:31:33.427743
+CREATE TABLE geo(
+    id INT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(512) UNIQUE,
+    parent_name VARCHAR(512),
+    lineage VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-05-07T10:18:58.290527
+CREATE TABLE location_recode(
+    id INT AUTO_INCREMENT NOT NULL,
+    raw_string VARCHAR(512),
+    location VARCHAR(512),
+    confirmed CHAR(1),
+    new_island_record CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-05-08T05:54:58.025723
+CREATE TABLE syn(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    synonym VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
