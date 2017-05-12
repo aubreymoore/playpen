@@ -286,27 +286,53 @@ def annotate2():
     return s
 
 
-def annotate_taxa():
+def annotate_html():
     import urllib2
-    # Download pestlist web page as a string.
-    f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
-    s = f.read().decode('utf-8')
+    import os
+    import io
+
+    if not os.path.exists('crop-pest-list.html'):
+        f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
+        s = f.read()
+        print('s: ',s)
+        with io.open('crop-pest-list.html','w', encoding='utf-8') as f:
+            f.write(s)
+
+    with io.open('crop-pest-list.html','r', encoding='utf-8') as f:
+        s = f.read()
+
     for row in db(db.taxon2.id > 0).select():
         '''
-        We need a better way to determine if a *name* is a leaf node.
         A taxon is a leaf node if it has no children:
-        i.e. There should be no records where *parent_tid* referes to this taxon.
+        i.e. There should be no records where *parent_tid* refers to this taxon.
         '''
         if db(db.taxon2.parent_tid==row.tid).count()==0:
-            #if row.name==row.lineage.split('|')[-1]:
-            #if db(db.taxon2.lineage.contains(row.name)).count() == 1:
-            s = s.replace(row.name, '{}<span style="color:red"> {}</span>'
-            .format(row.name, row.tid))
+            if row.lineage.startswith('Plantae'):
+                spanclass = 'host'
+            else:
+                spanclass = 'pest'
+            s = s.replace(row.name, '{}<span class="{}" style="color:red"> {}</span>'
+            .format(row.name, spanclass, row.tid))
 
     # Check synonyms
     for row in db(db.syn.id > 0).select():
-            s = s.replace(row.synonym, '{}<span style="color:green"> {}</span>'
+            s = s.replace(row.synonym, '{}<span class="synonym" style="color:green"> {}</span>'
             .format(row.synonym, row.taxon.tid))
+
+    # Annotate locations
+    for row in db(db.location_recode.id > 0).select():
+        s = s.replace(row.raw_string,
+        '''{}<span style="color:blue"> <b>{}</b> confirmed:<b>{}
+        </b> new_island_record:<b>{}</b></span>'''
+        .format(
+            row.raw_string,
+            row.location,
+            row.confirmed,
+            row.new_island_record)
+        )
+
+    with io.open('crop-pest-list-annotated.html', 'w', encoding='utf-8') as f:
+       f.write(s)
 
     return s
 
