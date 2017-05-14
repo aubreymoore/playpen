@@ -224,13 +224,13 @@ db.define_table('geo',
 db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
 
 
-
 db.define_table('associate2',
                 Field('t1', db.taxon2),
                 Field('t2', db.taxon2),
                 Field('type', default='plant host|herbivore'),
                 Field('note'),
-                )
+)
+
 
 db.define_table('resolved_names',
     Field('supplied_name_string'),

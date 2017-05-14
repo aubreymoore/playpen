@@ -349,3 +349,42 @@ CREATE TABLE syn(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 success!
+timestamp: 2017-05-14T08:20:45.959147
+CREATE TABLE ass(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    t2 INT  , INDEX t2__idx (t2), FOREIGN KEY (t2) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+success!
+TRUNCATE TABLE associate2 ;
+TRUNCATE TABLE associate2 ;
+success!

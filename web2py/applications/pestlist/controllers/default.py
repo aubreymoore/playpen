@@ -286,6 +286,48 @@ def annotate2():
     return s
 
 
+def parse_annotated_html():
+    import io
+    import re
+    import pandas as pd
+
+    with io.open('crop-pest-list-annotated.html','r', encoding='utf-8') as f:
+        s = f.read()
+
+    # <span class="pest" style="color:red">2083004</span>
+    # Note use of nongreedy suffix
+
+    p = re.compile('<span class="(.*?)" .*?>(.*?)</span>')
+    m = p.findall(s)
+
+    # m is a list of tuples: [(u'pest', u'1740496'), (u'pest', u'5109882')]
+
+    mylist = []
+    host=None; pest=None
+    for item in m:
+        if item[0] == 'mw-headline':
+            # Extract the host code, which is the string between ">" and the
+            # end of line.
+            host = re.match('.*>(.*?)$', item[1]).group(1)
+            pest = None
+        if item[0] in ['pest', 'synonym']:
+            pest = item[1]
+        if host and pest:
+            mylist.append({'tid1': host, 'tid2': pest})
+
+    # Add records to associate2 table
+    db.associate2.truncate()
+    for row in mylist:
+        # look up id's
+        host_id = db(db.taxon2.tid==row['tid1']).select('id').first()
+        pest_id = db(db.taxon2.tid==row['tid2']).select('id').first()
+        # Insert if not a duplicate record
+        nrows = db(db.associate2.t1==host_id)(db.associate2.t2==pest_id).count()
+        if nrows==0:
+            db.associate2.insert(t1=host_id, t2=pest_id)
+    return {'mylist': mylist, 'host_id': host_id, 'pest_id': pest_id}
+
+
 def annotate_html():
     import urllib2
     import os
@@ -311,18 +353,18 @@ def annotate_html():
                 spanclass = 'host'
             else:
                 spanclass = 'pest'
-            s = s.replace(row.name, '{}<span class="{}" style="color:red"> {}</span>'
+            s = s.replace(row.name, '{}<span class="{}" style="color:red">{}</span>'
             .format(row.name, spanclass, row.tid))
 
     # Check synonyms
     for row in db(db.syn.id > 0).select():
-            s = s.replace(row.synonym, '{}<span class="synonym" style="color:green"> {}</span>'
+            s = s.replace(row.synonym, '{}<span class="synonym" style="color:green">{}</span>'
             .format(row.synonym, row.taxon.tid))
 
     # Annotate locations
     for row in db(db.location_recode.id > 0).select():
         s = s.replace(row.raw_string,
-        '''{}<span style="color:blue"> <b>{}</b> confirmed:<b>{}
+        '''{}<span style="color:blue"><b>{}</b> confirmed:<b>{}
         </b> new_island_record:<b>{}</b></span>'''
         .format(
             row.raw_string,
