@@ -1,7 +1,106 @@
 # -*- coding: utf-8 -*-
 
+def load_x():
+    sql = "select name, url from taxon2, pacific_pests where name=scientific_name;"
+    return db.executesql(sql, as_dict=True)
+
+def crop_index():
+
+
+    def get_image(t1):
+        res = db(db.image.t1==t1).select('image_link').first()
+        if res:
+            return res['_extra']['image_link']
+        else:
+            return None
+
+
+    sql = '''SELECT *
+             FROM taxon2
+             WHERE id IN
+                (SELECT t1
+                 FROM associate2
+                 GROUP BY t1)
+             ORDER BY lineage;'''
+    crops = db.executesql(sql, as_dict=True)
+    return locals()
+
+
+def pest_list(taxon2_id):
+    sql = '''SELECT *
+             FROM taxon2
+             WHERE id IN
+                (SELECT t2
+                 FROM associate2
+                 WHERE t1={})
+             ORDER BY lineage;'''.format(taxon2_id)
+    print sql
+    return db.executesql(sql, as_dict=True)
+
+
+def taxon_info(taxon2_id):
+    q = db.taxon2.id==taxon2_id
+    return db(q).select().first()
+
+
+def crop_page():
+
+    def get_image(t1):
+        res = db(db.image.t1==t1).select('image_link').first()
+        if res:
+            return res['_extra']['image_link']
+        else:
+            return None
+
+    taxon2_id = request.args(0)
+    if not taxon2_id:
+        return '''No taxon2_id provided!<br>
+                  This function expects a parameter.<br>
+                  Example:<br>
+                  http://127.0.0.1:8000/pestlist/default/crop_page/58'''
+    crop_info = taxon_info(taxon2_id)
+    pests = pest_list(taxon2_id)
+    return locals()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def find_taxon2_problems():
+    s = ''
+    ranks = {
+        'kingdom': 1,
+        'phylum':  2,
+        'class':   3,
+        'order':   4,
+        'family':  5,
+        'genus':   6,
+        'species': 7,
+        'subspecies': 8
+    }
+    for row in db(db.taxon2).select():
+        n = len(row.lineage.split('|'))
+        if n != ranks[row.trank]:
+            s += '{} {} {} {}<br>'.format(
+                row.tid, row.trank, row.name, row.lineage)
+    return s
+
+
 def test_tree():
-    return
+    return dict()
+
+
+def create_child_node():
+    return dict()
 
 
 def display_taxonomic_tree():
@@ -49,7 +148,7 @@ def display_taxonomic_tree():
     return dict(form=form, m=m)
 
 
-def display_geo_tree():
+def display_tax_tree():
     import json
     # Important: root nodes must have 'parent':'#'
     m = None
@@ -67,12 +166,56 @@ def display_geo_tree():
 
         #level_dict = {'kingdom':1,'phylum':2,'class':3,'order':4,'family':5,'genus':6,'species':7}
         if root_taxon == '':
+            rows = db(db.taxon2).select(orderby=db.taxon2.lineage)
+        else:
+            rows = db(db.taxon2.lineage.contains(root_taxon)).select(orderby=db.taxon2.lineage)
+        rows[0].parent_tid = '#' # required by jstree to indicate a root node
+
+        # MAYBE THE FOLLOWING SHOULD BE MOVED INTO THE VIEW (display_taxonomic_tree)
+
+        mylist = []
+        for row in rows:
+            # if parent_tid is null, replace with '#'
+            if row.parent_tid is None:
+                row.parent_tid = '#'
+
+            if row.trank in ['genus','species']:
+                text = '{} <b><i>{}</i></b>'.format(row.trank, row.name)
+            else:
+                text = '{} <b>{}</b>'.format(row.trank, row.name)
+            mylist.append({'id':row.tid,'parent':row.parent_tid,'text':text})
+        m = json.dumps(mylist)
+
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'Please select a root taxon and press "SUBMIT QUERY".'
+    return dict(form=form, m=m)
+
+
+def display_geo_tree():
+    import json
+    m = None
+    first_node_id = None
+    mylist = []
+
+    form=FORM('Root location (leave blank to include all locations):',
+        INPUT(_name='root_taxon'),
+        INPUT(_type='submit', _value='Load tree'),
+    )
+
+    if form.accepts(request,session):
+
+        root_taxon = form.vars.root_taxon
+        print(root_taxon)
+
+        if root_taxon == '':
             rows = db(db.geo).select(orderby=db.geo.lineage)
         else:
             rows = db(db.geo.lineage.contains(root_taxon)).select(orderby=db.geo.lineage)
         rows[0].parent_name = '#' # required by jstree to indicate a root node
 
-        mylist = []
+        #mylist = []
         for row in rows:
             # if parent_tid is null, replace with '#'
             if row.parent_name is None:
@@ -82,9 +225,10 @@ def display_geo_tree():
 
     elif form.errors:
         response.flash = 'form has errors'
-    else:
-        response.flash = 'Please select a root taxon and press "SUBMIT QUERY".'
-    return dict(form=form, m=m)
+
+    if mylist:
+      first_node_id = mylist[0]['id']
+    return dict(form=form, m=m, first_node_id=first_node_id)
 
 
 def populate_resolved_names_table():
@@ -214,8 +358,150 @@ def annotate2():
         # Check that row is a leaf node; will not work if name is used for multiple taxa
         if db(db.taxon2.lineage.contains(row.name)).count() == 1:
             s = s.replace(row.name, '{} <b>{}</b>'.format(row.name, row.tid))
+    return s
+
+
+def parse_annotated_html():
+    import io
+    import re
+    import pandas as pd
+
+    with io.open('crop-pest-list-annotated.html','r', encoding='utf-8') as f:
+        s = f.read()
+
+    # <span class="pest" style="color:red">2083004</span>
+    # Note use of nongreedy suffix
+
+    p = re.compile('<span class="(.*?)" .*?>(.*?)</span>')
+    m = p.findall(s)
+
+    # m is a list of tuples: [(u'pest', u'1740496'), (u'pest', u'5109882')]
+
+    mylist = []
+    host=None; pest=None
+    for item in m:
+        if item[0] == 'mw-headline':
+            # Extract the host code, which is the string between ">" and the
+            # end of line.
+            host = re.match('.*>(.*?)$', item[1]).group(1)
+            pest = None
+        if item[0] in ['pest', 'synonym']:
+            pest = item[1]
+        if host and pest:
+            mylist.append({'tid1': host, 'tid2': pest})
+
+    # Add records to associate2 table
+    db.associate2.truncate()
+    for row in mylist:
+        # look up id's
+        host_id = db(db.taxon2.tid==row['tid1']).select('id').first()
+        pest_id = db(db.taxon2.tid==row['tid2']).select('id').first()
+        # Insert if not a duplicate record
+        nrows = db(db.associate2.t1==host_id)(db.associate2.t2==pest_id).count()
+        if nrows==0:
+            db.associate2.insert(t1=host_id, t2=pest_id)
+    return {'mylist': mylist, 'host_id': host_id, 'pest_id': pest_id}
+
+
+def annotate_html():
+    import urllib2
+    import os
+    import io
+
+    if not os.path.exists('crop-pest-list.html'):
+        f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
+        s = f.read()
+        print('s: ',s)
+        with io.open('crop-pest-list.html','w', encoding='utf-8') as f:
+            f.write(s)
+
+    with io.open('crop-pest-list.html','r', encoding='utf-8') as f:
+        s = f.read()
+
+    for row in db(db.taxon2.id > 0).select():
+        '''
+        A taxon is a leaf node if it has no children:
+        i.e. There should be no records where *parent_tid* refers to this taxon.
+        '''
+        if db(db.taxon2.parent_tid==row.tid).count()==0:
+            if row.lineage.startswith('Plantae'):
+                spanclass = 'host'
+            else:
+                spanclass = 'pest'
+            s = s.replace(row.name, '{}<span class="{}" style="color:red">{}</span>'
+            .format(row.name, spanclass, row.tid))
+
+    # Check synonyms
+    for row in db(db.syn.id > 0).select():
+            s = s.replace(row.synonym, '{}<span class="synonym" style="color:green">{}</span>'
+            .format(row.synonym, row.taxon.tid))
+
+    # Annotate locations
+    for row in db(db.location_recode.id > 0).select():
+        s = s.replace(row.raw_string,
+        '''{}<span style="color:blue"><b>{}</b> confirmed:<b>{}
+        </b> new_island_record:<b>{}</b></span>'''
+        .format(
+            row.raw_string,
+            row.location,
+            row.confirmed,
+            row.new_island_record)
+        )
+
+    with io.open('crop-pest-list-annotated.html', 'w', encoding='utf-8') as f:
+       f.write(s)
 
     return s
+
+
+def annotate_locations():
+    import urllib2
+    # Download pestlist web page as a string.
+    f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
+    s = f.read().decode('utf-8')
+    for row in db(db.location_recode.id > 0).select():
+        s = s.replace(row.raw_string,
+        '''{}<span style="color:blue"> <b>{}</b> confirmed:<b>{}
+        </b> new_island_record:<b>{}</b></span>'''
+        .format(
+            row.raw_string,
+            row.location,
+            row.confirmed,
+            row.new_island_record)
+        )
+    return s
+
+
+def harvest_images():
+    import urllib2
+    query = 'Spodoptera+mauritia'
+    #query = query.split(' ')
+	#query = '+'.join(query)
+    url='https://www.bing.com/images/search?q={}'.format(query)
+    f = urllib2.urlopen(url)
+    s = f.read().decode('utf-8')
+    return locals()
+
+
+
+
+def extract_locations():
+    import urllib2
+    import re
+
+    # Download pestlist web page as a string.
+    f = urllib2.urlopen('https://aubreymoore.github.io/crop-pest-list/list.html')
+    s = f.read().decode('utf-8')
+
+    matches = re.findall(r'\s(.=.*)\s', s)
+    m = set(matches)
+    s = ''
+    for item in list(m):
+        s += '{}<br>'.format(item)
+
+    return s
+
+
 
 
 def get_extracted_names():
@@ -390,22 +676,3 @@ def user():
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
     return dict(form=auth())
-#
-#
-# @cache.action()
-# def download():
-#     """
-#     allows downloading of uploaded files
-#     http://..../[app]/default/download/[filename]
-#     """
-#     return response.download(request, db)
-#
-#
-# def call():
-#     """
-#     exposes services. for example:
-#     http://..../[app]/default/call/jsonrpc
-#     decorate with @services.jsonrpc the functions to expose
-#     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
-#     """
-#     return service()

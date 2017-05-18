@@ -133,6 +133,16 @@ auth.settings.reset_password_requires_verification = True
 
 
 '''
+This is a temporary table containing pest sheets from the Pacific Pests and Pathogens Site
+
+'''
+db.define_table('pacific_pests',
+    Field('url'),
+    Field('scientific_name')
+)
+
+
+'''
 This table contains a schema for recoding location data. In the original pest
 list, codes such as "M=G", "M=RG", "B=?". and "Y=n" were  used. A set of codes
 was extracted from the HTML using pestlist/default/extract_locations. Note that
@@ -224,6 +234,12 @@ db.define_table('geo',
 db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
 
 
+db.define_table('image',
+    Field('t1', db.taxon2),
+    Field('image_link', type='text'),
+)
+
+
 db.define_table('associate2',
                 Field('t1', db.taxon2),
                 Field('t2', db.taxon2),
@@ -287,6 +303,12 @@ db.define_table('duo',
     Field('score'),
     Field('taxon_id'),
     auth.signature
+)
+
+
+db.define_table('factsheet',
+    Field('t1', db.taxon2),
+    Field('url'),
 )
 
 

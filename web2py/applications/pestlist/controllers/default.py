@@ -1,5 +1,85 @@
 # -*- coding: utf-8 -*-
 
+def crop_index():
+
+
+    def get_image(t1):
+        res = db(db.image.t1==t1).select('image_link').first()
+        if res:
+            return res['_extra']['image_link']
+        else:
+            return None
+
+
+    sql = '''SELECT *
+             FROM taxon2
+             WHERE id IN
+                (SELECT t1
+                 FROM associate2
+                 GROUP BY t1)
+             ORDER BY lineage;'''
+    crops = db.executesql(sql, as_dict=True)
+    return locals()
+
+
+def pest_list(taxon2_id):
+    sql = '''SELECT *
+             FROM taxon2
+             WHERE id IN
+                (SELECT t2
+                 FROM associate2
+                 WHERE t1={})
+             ORDER BY lineage;'''.format(taxon2_id)
+    print sql
+    return db.executesql(sql, as_dict=True)
+
+
+def taxon_info(taxon2_id):
+    q = db.taxon2.id==taxon2_id
+    return db(q).select().first()
+
+
+def crop_page():
+
+    def get_image(t1):
+        res = db(db.image.t1==t1).select('image_link').first()
+        if res:
+            return res['_extra']['image_link']
+        else:
+            return None
+
+    def get_factsheets(t1):
+        res = db(db.factsheet.t1==t1).select('url').first()
+        print res
+        if res:
+            return res['_extra']['url']
+        else:
+            return None
+
+
+    taxon2_id = request.args(0)
+    if not taxon2_id:
+        return '''No taxon2_id provided!<br>
+                  This function expects a parameter.<br>
+                  Example:<br>
+                  http://127.0.0.1:8000/pestlist/default/crop_page/58'''
+    crop_info = taxon_info(taxon2_id)
+    pests = pest_list(taxon2_id)
+    return locals()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def find_taxon2_problems():
     s = ''
     ranks = {
@@ -397,6 +477,18 @@ def annotate_locations():
     return s
 
 
+def harvest_images():
+    import urllib2
+    query = 'Spodoptera+mauritia'
+    #query = query.split(' ')
+	#query = '+'.join(query)
+    url='https://www.bing.com/images/search?q={}'.format(query)
+    f = urllib2.urlopen(url)
+    s = f.read().decode('utf-8')
+    return locals()
+
+
+
 
 def extract_locations():
     import urllib2
@@ -589,22 +681,3 @@ def user():
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
     return dict(form=auth())
-#
-#
-# @cache.action()
-# def download():
-#     """
-#     allows downloading of uploaded files
-#     http://..../[app]/default/download/[filename]
-#     """
-#     return response.download(request, db)
-#
-#
-# def call():
-#     """
-#     exposes services. for example:
-#     http://..../[app]/default/call/jsonrpc
-#     decorate with @services.jsonrpc the functions to expose
-#     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
-#     """
-#     return service()

@@ -388,3 +388,27 @@ success!
 TRUNCATE TABLE associate2 ;
 TRUNCATE TABLE associate2 ;
 success!
+timestamp: 2017-05-17T16:03:38.306425
+CREATE TABLE image(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    image_link LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-05-18T15:31:02.965984
+CREATE TABLE pacific_pests(
+    id INT AUTO_INCREMENT NOT NULL,
+    url VARCHAR(512),
+    scientific_name VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-05-18T18:57:02.687704
+CREATE TABLE factsheet(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    url VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!

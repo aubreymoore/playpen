@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Crop Index</h1>
+    <p>Here is a list of crops grown in Micronesia.<br>
+      Click on a crop to see which pests are known to attack it.</p>
+  </div>
+
+
+<ol>
+    {{for crop in crops:}}
+    {{name = crop['name']}}
+    <li>
+        <h4>{{=name}}</h4><br>
+        {{s=get_image(crop['id'])}}
+        {{if s:}}
+        {{=XML(s)}}
+        {{pass}}
+
+        <a href="crop_page/{{=crop['id']}}"><button>Pests</button></a>
+        <a href="https://www.bing.com/images/search?q={{=name}}"><button>Bing images</button></a>
+        <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
+        <a href="http://www.gbif.org/species/{{=crop['tid']}}"><button>GBIF {{=crop['tid']}}</button></a>
+        <br>
+        {{=crop}}</li><br></a>
+    {{pass}}
+</ol>
+    </div>
+
+</body>

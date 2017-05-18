@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="jumbotron">
+      {{name = crop_info['name']}}
+      {{if crop_info['trank'] in ['genus', 'species', 'subspecies']:}}
+        <h1><i>{{=name}}</i></h1><br>
+      {{else:}}
+        <h1>{{=name}}</h1><br>
+      {{pass}}
+      {{s=get_image(crop_info['id'])}}
+      {{if s:}}
+      {{=XML(s)}}
+      {{pass}}
+      Write a bunch of stuff here.
+    </div>
+
+    <ol>
+      {{for pest in pests:}}
+      {{name = pest['name']}}
+      <li>
+        {{if pest['trank'] in ['genus', 'species', 'subspecies']:}}
+          <h4><i>{{=name}}</i></h4><br>
+        {{else:}}
+          <h4>{{=name}}</h4><br>
+        {{pass}}
+
+        {{s=get_image(pest['id'])}}
+        {{if s:}}
+        {{=XML(s)}}
+        {{pass}}
+
+        {{s=get_factsheets(pest['id'])}}
+        {{if s:}}
+        <a href="{{=XML(s)}}"><button style="background:red">PestNet factsheet</button></a><br>
+        {{pass}}
+
+        <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
+        <a href="https://demo.gbif.org/species/{{=pest['tid']}}"><button>GBIF           {{=pest['tid']}}</button></a><br>
+
+        Search for images:
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.myspecies.info&safe=images">
+          <button>guaminsects.mysecies.info</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.net&safe=images">
+          <button>guaminsects.net</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=inaturalist.org&safe=images">
+          <button>inaturalist.org</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&safe=images">
+          <button>anywhere(Google)</button></a>
+
+          <a href="https://www.bing.com/images/search?q={{=name}}">
+          <button>anywhere(Bing)</button></a>
+          <br>{{=pest}}
+      </li>
+      {{pass}}
+    </ol>
+</body>

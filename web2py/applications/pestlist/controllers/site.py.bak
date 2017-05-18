@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+# try something like
+def index(): return dict(message="hello from site.py")
+
+
+def crop_list():
+    q = db.associate2
+    crops = db(q).select(db.associate2.t1,
+        groupby=db.associate2.t1,
+        orderby=db.associate2.t1)
+    return crops
+
+
+def pest_list(taxon2_id):
+    q = db.associate2.t1==taxon2_id
+    pests = db(q).select(db.associate2.t2)
+    return pests
+
+def taxon_info(taxon2_id):
+    q = db.taxon2.id==taxon2_id
+    taxon_info = db(q).select()
+    return taxon_info
+
+def crop_pagee():
+    taxon2_id = 58
+    crop_info = taxon_info(taxon2_id)
+    return locals
+
+def test():
+    return {crop_page(58)}

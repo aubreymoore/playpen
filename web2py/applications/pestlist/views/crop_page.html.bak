@@ -1,0 +1,9 @@
+{{extend 'layout.html'}}
+<h1>This is the crop_page.html template</h1>
+{{=BEAUTIFY(response._vars)}}
+
+{{ =taxon2_id }}
+
+<h2>
+    {{ =crop_info }}
+</h2>
