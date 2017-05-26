@@ -1,5 +1,46 @@
 # -*- coding: utf-8 -*-
 
+
+def populate_vernacular_table():
+    import requests
+
+    sql = "select id, tid from taxon2"
+    taxa = db.executesql(sql, as_dict=True)
+    mylist = []
+    i = 0
+    for taxon in taxa:
+        i += 1
+        print '{} of 806 id={} tid={}'.format(i, taxon['id'], taxon['tid'])
+        if taxon['tid'].isdigit(): # tid is a GBIF id
+            url = 'http://api.gbif.org/v1/species/{}/vernacularNames'.format(taxon['tid'])
+            mydict = requests.get(url).json()
+            for r in mydict['results']:
+                if r['language'] in ['eng','']:
+                    db.vernacular.insert(name = r['vernacularName'],
+                        language = r['language'], t1 = taxon['id'], source = url)
+    print 'FINISHED'
+    return locals()
+
+
+def populate_synonym_table():
+    import requests
+
+    sql = "select id, tid from taxon2"
+    taxa = db.executesql(sql, as_dict=True)
+    i = 0
+    for taxon in taxa:
+        i += 1
+        print '{} of 806 id={} tid={}'.format(i, taxon['id'], taxon['tid'])
+        if taxon['tid'].isdigit(): # tid is a GBIF id
+            url = 'http://api.gbif.org/v1/species/{}/synonyms'.format(taxon['tid'])
+            mydict = requests.get(url).json()
+            for r in mydict['results']:
+                    db.synonym2.insert(name = r['scientificName'], t1 = taxon['id'], source = url)
+    print 'FINISHED'
+    return locals()
+
+
+
 def crop_index():
 
 
@@ -10,6 +51,12 @@ def crop_index():
         else:
             return None
 
+    def get_vernacular_names(t1):
+        res = db(db.vernacular.t1==t1).select('name')
+        if res:
+            return res
+        else:
+            return None
 
     sql = '''SELECT *
              FROM taxon2
@@ -40,6 +87,20 @@ def taxon_info(taxon2_id):
 
 
 def crop_page():
+
+    def get_synonyms(t1):
+        res = db(db.synonym2.t1==t1).select('name')
+        if res:
+            return res
+        else:
+            return None
+
+    def get_vernacular_names(t1):
+        res = db(db.vernacular.t1==t1).select('name')
+        if res:
+            return res
+        else:
+            return None
 
     def get_image(t1):
         res = db(db.image.t1==t1).select('image_link').first()

@@ -22,17 +22,31 @@
     {{name = crop['name']}}
     <li>
         <h4>{{=name}}</h4><br>
-        {{s=get_image(crop['id'])}}
+
+        <!-- {{s=get_image(crop['id'])}}
         {{if s:}}
         {{=XML(s)}}
+        {{pass}} -->
+
+        <p>
+        <b>Vernacular names: </b>
+        {{ vnames = get_vernacular_names(crop['id']) }}
+        {{ if vnames: }}
+          {{ first = True }}
+          {{ for vname in vnames: }}
+            {{ if not first: }},{{ pass }} {{ first = False }}
+            {{ =XML(vname['name']) }}
+          {{pass}}
         {{pass}}
+        </p>
+        <p><b>Lineage: </b>{{=crop['lineage']}}</p>
 
         <a href="crop_page/{{=crop['id']}}"><button>Pests</button></a>
         <a href="https://www.bing.com/images/search?q={{=name}}"><button>Bing images</button></a>
         <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
         <a href="http://www.gbif.org/species/{{=crop['tid']}}"><button>GBIF {{=crop['tid']}}</button></a>
         <br>
-        {{=crop}}</li><br></a>
+        </li><br></a>
     {{pass}}
 </ol>
     </div>

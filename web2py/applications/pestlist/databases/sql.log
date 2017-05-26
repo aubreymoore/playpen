@@ -412,3 +412,58 @@ CREATE TABLE factsheet(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 success!
+timestamp: 2017-05-20T03:22:06.964980
+CREATE TABLE vernacular(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    vernacularName VARCHAR(512),
+    language VARCHAR(512),
+    source VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-05-20T10:02:37.194655
+ALTER TABLE vernacular ADD name VARCHAR(512);
+success!
+timestamp: 2017-05-20T10:02:37.271590
+ALTER TABLE vernacular DROP COLUMN vernacularname;
+success!
+timestamp: 2017-05-20T13:35:31.409990
+CREATE TABLE synonym(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    synonym VARCHAR(512),
+    source VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-05-20T13:47:11.136844
+ALTER TABLE synonym ADD t1 INT  , ADD INDEX t1__idx (t1), ADD FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE;
+success!
+timestamp: 2017-05-20T13:47:11.236892
+ALTER TABLE synonym ADD name VARCHAR(512);
+success!
+timestamp: 2017-05-20T13:47:11.320368
+ALTER TABLE synonym DROP COLUMN synonym;
+success!
+timestamp: 2017-05-20T13:47:11.389840
+ALTER TABLE synonym DROP COLUMN taxon;
+timestamp: 2017-05-20T13:48:04.647758
+ALTER TABLE synonym DROP COLUMN t1;
+timestamp: 2017-05-20T13:49:26.313872
+ALTER TABLE synonym ADD synonym VARCHAR(512);
+success!
+timestamp: 2017-05-20T13:49:26.406682
+ALTER TABLE synonym DROP COLUMN name;
+success!
+timestamp: 2017-05-20T13:49:26.487202
+ALTER TABLE synonym DROP COLUMN t1;
+timestamp: 2017-05-20T13:51:45.981306
+CREATE TABLE synonym2(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    source VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!

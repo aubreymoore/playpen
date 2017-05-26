@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,25 +8,140 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
+  Hi
+</body>
+</html>
 
-<div class="container">
-  <div class="jumbotron">
-    <h1>{{=crop_info.name}}</h1>
-  </div>
+  <!-- <div class="container">
+    <div class="jumbotron">
+      <div class="media">
+        <div class="media-left media-middle">
+          {{s=get_image(crop['id'])}}
+          {{if s:}}
+          {{=XML(s)}}
+          {{pass}}
+        </div>
+        <div class="media-body">
+          {{s=get_image(crop_info['id'])}}
+          {{if s:}}
+            {{=XML(s)}}
+          {{pass}}
+          <h1 class="media-heading"><i>Cocos nucifera</i><br><small>Coconut palm</small></h1><br>
+          <p><b>Vernacular names: </b> coco-da-bahia , coco-da-praia , coconut , coconut palm , copra , coqueiro-da-bahia , coqueiro-da-praia , khopar</p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="jumbotron">
+  </div> -->
 
-{{ =type(taxon2_id) }}<br>
-{{ =type(crop_info) }}<br><br>
 
-{{ =crop_info.lineage }}<br>
-{{ =crop_info.name }}<br>
-{{ =crop_info.tid }}<br>
+  <!-- <div class="container">
+    <div class="jumbotron">
+      <div class="media">
+        <div class="media-left media-middle">
+          <!-- {{s=get_image(crop_info['id'])}}
+          {{if s:}}
+            {{=XML(s)}}
+          {{pass}} -->
+        <!-- </div>
+        <div class="media-body"> -->
+          {{name = crop_info['name']}}
+          <!-- {{if crop_info['trank'] in ['genus', 'species', 'subspecies']:}}
+            <h1 class="media-heading"><i>{{=name}}</i></h1><br>
+          {{else:}}
+            <h1>{{=name}}</h1><br>
+          {{pass}} -->
+          <!-- <p><b>Vernacular names: </b>
+          {{ vnames = get_vernacular_names(crop_info['id']) }}
+          {{ if vnames: }}
+            {{ first = True }}
+            {{ for vname in vnames: }}
+              {{ if not first: }},
+              {{ pass }}
+              {{ first = False }}
+              {{ =XML(vname['name']) }}
+            {{pass}}
+          {{pass}}
+          </p> -->
+        <!-- </div>
+      </div>
+    </div> -->
 
-{{=crop_info.as_json}}<br><br>
+    <!-- <ul class="media-list">
+      {{for pest in pests:}}
+      {{name = pest['name']}}
+      <li class="media">
+        <div class="media-left">
+          {{s=get_image(pest['id'])}}
+          {{if s:}}
+            {{=XML(s)}}
+          {{pass}}
+        </div>
+        <div class="media-body">
+          {{if pest['trank'] in ['genus', 'species', 'subspecies']:}}
+            <h3 class="media-heading"><i>{{=name}}</i></h3><br>
+          {{else:}}
+            <h3 class="media-heading">{{=name}}</h3><br>
+          {{pass}}
 
-<ul>
-{{for pest in pests:}}
-    <li>{{ =pest }}</li>
-{{pass}}
-</ul>
-    </div>body>
+          <p>
+          <b>Vernacular names: </b>
+          {{ vnames = get_vernacular_names(pest['id']) }}
+          {{ if vnames: }}
+            {{ first = True }}
+            {{ for vname in vnames: }}
+              {{ if not first: }},{{ pass }} {{ first = False }}
+              {{ =XML(vname['name']) }}
+            {{pass}}
+          {{pass}}
+          </p>
+
+          <p>
+          <b>Scientific names (synonyms): </b>
+          {{ snames = get_synonyms(pest['id']) }}
+          {{ if snames: }}
+            {{ first = True }}
+            {{ for sname in snames: }}
+              {{ if not first: }},{{ pass }} {{ first = False }}
+              {{ =XML(sname['name']) }}
+            {{pass}}
+          {{pass}}
+          </p>
+
+          <p><b>Lineage: </b>{{=pest['lineage']}}</p>
+
+          <p><b>Fact sheets: </b>
+          {{s=get_factsheets(pest['id'])}}
+          {{if s:}}
+            <a href="{{=XML(s)}}"><button>PestNet</button></a><br>
+          {{pass}}
+          </p>
+
+          <p><b>General information: </b>
+          <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
+          <a href="https://demo.gbif.org/species/{{=pest['tid']}}"><button>GBIF {{=pest['tid']}}</button></a>
+          </p>
+
+          <p><b>Search for images: </b>
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.myspecies.info&safe=images">
+          <button>guaminsects.mysecies.info</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.net&safe=images">
+          <button>guaminsects.net</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=inaturalist.org&safe=images">
+          <button>inaturalist.org</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&safe=images">
+          <button>anywhere(Google)</button></a>
+
+          <a href="https://www.bing.com/images/search?q={{=name}}">
+          <button>anywhere(Bing)</button></a>
+          </p>
+          <hr>
+        </div>
+      </li>
+    </ul> -->
+  <!-- </div> -->

@@ -1,5 +1,0 @@
-{{extend 'layout.html'}}
-<h1>This is the site/crop_page.html template</h1>
-{{=BEAUTIFY(response._vars)}}
-
-{{ =crop_info }}

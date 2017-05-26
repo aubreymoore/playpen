@@ -316,3 +316,5 @@
 [2017-05-18 18:53:46] EDIT pestlist/models/db.py: 0
 [2017-05-18 18:55:11] EDIT pestlist/models/db.py: 0
 [2017-05-18 18:56:49] EDIT pestlist/models/db.py: 0
+[2017-05-21 14:00:10] EDIT pestlist/views/default/crop_page.html: 0
+[2017-05-21 14:14:17] CREATE default/crop_page.html: 0

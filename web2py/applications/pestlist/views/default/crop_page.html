@@ -10,46 +10,106 @@
 </head>
 
 <body>
-
   <div class="container">
     <div class="jumbotron">
-      {{name = crop_info['name']}}
-      {{if crop_info['trank'] in ['genus', 'species', 'subspecies']:}}
-        <h1><i>{{=name}}</i></h1><br>
-      {{else:}}
-        <h1>{{=name}}</h1><br>
-      {{pass}}
-      {{s=get_image(crop_info['id'])}}
-      {{if s:}}
-      {{=XML(s)}}
-      {{pass}}
-      Write a bunch of stuff here.
+      <div class="media">
+        <div class="media-left media-middle">
+          {{s=get_image(crop_info['id'])}}
+          {{if s:}}
+            {{=XML(s)}}
+          {{ else: }}
+            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
+          {{pass}}
+        </div>
+        <div class="media-body">
+
+          {{name = crop_info['name']}}
+          {{if crop_info['trank'] in ['genus', 'species', 'subspecies']:}}
+            <h1 class="media-heading"><i>{{=name}}</i></h1>
+          {{else:}}
+            <h1 class="media-heading">{{=name}}</h1>
+          {{pass}}
+
+          <p><b>Vernacular names: </b>
+          {{ vnames = get_vernacular_names(crop_info['id']) }}
+          {{ if vnames: }}
+            {{ first = True }}
+            {{ for vname in vnames: }}
+              {{ if not first: }}
+              |
+              {{ pass }}
+              {{ first = False }}
+              {{ =XML(vname['name']) }}
+            {{pass}}
+          {{pass}}
+          </p>
+
+        </div>
+      </div>
     </div>
 
-    <ol>
+    <ul class="media-list">
       {{for pest in pests:}}
       {{name = pest['name']}}
-      <li>
-        {{if pest['trank'] in ['genus', 'species', 'subspecies']:}}
-          <h4><i>{{=name}}</i></h4><br>
-        {{else:}}
-          <h4>{{=name}}</h4><br>
-        {{pass}}
+      <li class="media">
+        <div class="media-left">
+          {{s=get_image(pest['id'])}}
+          {{if s:}}
+            {{=XML(s)}}
+          {{else:}}
+            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
+          {{pass}}
+        </div>
+        <div class="media-body">
+          {{if pest['trank'] in ['genus', 'species', 'subspecies']:}}
+            <h3 class="media-heading"><i>{{=name}}</i></h3><br>
+          {{else:}}
+            <h3 class="media-heading">{{=name}}</h3><br>
+          {{pass}}
 
-        {{s=get_image(pest['id'])}}
-        {{if s:}}
-        {{=XML(s)}}
-        {{pass}}
+          <p>
+          <b>Vernacular names: </b>
+          {{ vnames = get_vernacular_names(pest['id']) }}
+          {{ if vnames: }}
+            {{ first = True }}
+            {{ for vname in vnames: }}
+              {{ if not first: }},{{ pass }} {{ first = False }}
+              {{ =XML(vname['name']) }}
+            {{pass}}
+          {{pass}}
+          </p>
 
-        {{s=get_factsheets(pest['id'])}}
-        {{if s:}}
-        <a href="{{=XML(s)}}"><button style="background:red">PestNet factsheet</button></a><br>
-        {{pass}}
+          <p>
+          <b>Scientific names (synonyms): </b>
+          {{ snames = get_synonyms(pest['id']) }}
+          {{ if snames: }}
+            {{ first = True }}
+            {{ for sname in snames: }}
+              {{ if not first: }},{{ pass }} {{ first = False }}
+              {{ =XML(sname['name']) }}
+            {{pass}}
+          {{pass}}
+          </p>
 
-        <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
-        <a href="https://demo.gbif.org/species/{{=pest['tid']}}"><button>GBIF           {{=pest['tid']}}</button></a><br>
+          <p><b>Lineage: </b>{{=pest['lineage']}}</p>
 
-        Search for images:
+          <p><b>Fact sheets: </b>
+          {{s=get_factsheets(pest['id'])}}
+          {{if s:}}
+            <a href="{{=XML(s)}}"><button>PestNet</button></a><br>
+          {{pass}}
+          </p>
+
+          <p><b>General information: </b>
+          <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
+          <a href="https://demo.gbif.org/species/{{=pest['tid']}}"><button>GBIF {{=pest['tid']}}</button></a>
+          </p>
+
+          <p><b>Search for images: </b>
+
+          <a href="https://www.insectimages.org/search/action.cfm?q={{=name}}">
+          <button>BugWood</button></a>
+
           <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.myspecies.info&safe=images">
           <button>guaminsects.mysecies.info</button></a>
 
@@ -64,8 +124,13 @@
 
           <a href="https://www.bing.com/images/search?q={{=name}}">
           <button>anywhere(Bing)</button></a>
-          <br>{{=pest}}
+          </p>
+        </div>
       </li>
-      {{pass}}
-    </ol>
+      <hr>
+      {{ pass }}
+    </ul>
+   </div>
 </body>
+
+</html>

@@ -132,6 +132,8 @@ auth.settings.reset_password_requires_verification = True
 # -------------------------------------------------------------------------
 
 
+
+
 '''
 This is a temporary table containing pest sheets from the Pacific Pests and Pathogens Site
 
@@ -203,14 +205,6 @@ def compute_taxon_rank(parent_tid):
     return s
 
 
-
-'''
-syn
-'''
-db.define_table('syn',
-    Field('taxon', 'reference taxon2'),
-    Field('synonym')
-)
 
 
 '''
@@ -310,6 +304,25 @@ db.define_table('factsheet',
     Field('t1', db.taxon2),
     Field('url'),
 )
+
+
+db.define_table('vernacular',
+    Field('t1', db.taxon2),
+    Field('name'),
+    Field('language'),
+    Field('source'),
+)
+db.vernacular._before_insert.append(lambda r: db((db.vernacular.t1==r["t1"]) & (db.vernacular.name==r["name"])).select() )
+
+
+db.define_table('synonym2',
+    Field('t1', db.taxon2),
+    Field('name'),
+    Field('source'),
+)
+db.vernacular._before_insert.append(lambda r: db((db.synonym.t1==r["t1"]) & (db.synonym.name==r["name"])).select() )
+
+
 
 
 # -------------------------------------------------------------------------
