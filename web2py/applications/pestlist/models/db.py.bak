@@ -32,9 +32,14 @@ if not request.env.web2py_runtime_gae:
     #          pool_size=myconf.get('db.pool_size'),
     #          migrate_enabled=myconf.get('db.migrate'),
     #          check_reserved=['all'])
-
-    db = DAL('mysql://aubreymoore:Canada_12@localhost/pestlist')
-
+    
+    # To enable saving this code in a public GitHub repo, the database connection string will be
+    # read from a file, db_connection_string.txt, which is black listed in .gitignore
+    
+    with open("db_connection_string.txt", "r") as f:
+        db_connection_string = f.read()
+    print('db_connection_string read: ', db_connection_string)
+    db = DAL(db_connection_string, fake_migrate_all=True)
 else:
     # ---------------------------------------------------------------------
     # connect to Google BigTable (optional 'google:datastore://namespace')
@@ -131,10 +136,6 @@ auth.settings.reset_password_requires_verification = True
 # >>> for row in rows: print row.id, row.myfield
 # -------------------------------------------------------------------------
 
-db.define_table('factsheet',
-    Field('t1', db.taxon2),
-    Field('url'),
-)
 
 '''
 This is a temporary table containing pest sheets from the Pacific Pests and Pathogens Site
@@ -214,6 +215,27 @@ syn
 db.define_table('syn',
     Field('taxon', 'reference taxon2'),
     Field('synonym')
+)
+
+
+'''
+vernacular
+'''
+db.define_table('vernacular',
+    Field('t1', db.taxon2),
+    Field('language'),
+    Field('source'),
+    Field('name')
+)
+
+
+'''
+synonym2
+'''
+db.define_table('synonym2',
+    Field('t1', db.taxon2),
+    Field('name'),
+    Field('source'),
 )
 
 
@@ -307,6 +329,11 @@ db.define_table('duo',
     Field('score'),
     Field('taxon_id'),
     auth.signature
+)
+
+db.define_table('factsheet',
+    Field('t1', db.taxon2),
+    Field('url'),
 )
 
 

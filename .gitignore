@@ -1,3 +1,7 @@
+db_connection_string.txt
+*.pyc
+*.bak
+
 # for web2py
 cache
 databases

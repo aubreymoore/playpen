@@ -318,3 +318,11 @@
 [2017-05-18 18:56:49] EDIT pestlist/models/db.py: 0
 [2017-05-21 14:00:10] EDIT pestlist/views/default/crop_page.html: 0
 [2017-05-21 14:14:17] CREATE default/crop_page.html: 0
+[2017-05-27 17:15:36] EDIT pestlist/models/db.py: 1
+[2017-05-29 09:33:37] EDIT pestlist/models/db.py: 4
+[2017-05-29 09:34:28] EDIT pestlist/models/db.py: 1
+[2017-05-29 09:44:28] EDIT pestlist/models/db.py: 3
+[2017-05-29 09:45:29] EDIT pestlist/models/db.py: 0
+[2017-05-29 09:46:49] EDIT pestlist/models/db.py: 1
+[2017-05-29 10:03:35] EDIT pestlist/models/db.py: -5
+[2017-05-29 10:06:55] EDIT pestlist/models/db.py: 1

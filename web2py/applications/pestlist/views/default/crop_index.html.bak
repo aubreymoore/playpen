@@ -13,7 +13,7 @@
   <div class="jumbotron">
     <h1>Crop Index</h1>
     <p>Here is a list of crops grown in Micronesia.<br>
-      Click on a crop to see which pests are known to attack it.</p>
+      Click on a Pests button to see the crop's pests.</p>
   </div>
 
 {{function_test()}}
