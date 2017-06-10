@@ -117,6 +117,12 @@ def crop_page():
         else:
             return None
 
+    def get_geo(t1):
+        res = db(db.geo.t1==t1).select('name')
+        if res:
+            return res
+        else:
+            return None
 
     taxon2_id = request.args(0)
     if not taxon2_id:
@@ -742,3 +748,33 @@ def user():
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
     return dict(form=auth())
+
+
+def get_bugwood_images():
+    import bugwood
+    return bugwood.get_images('Oryctes rhinoceros')
+
+
+def test_populate_image_table():
+    import bugwood
+    for row in db(db.taxon2.id > 0).select():
+        children_count = db(db.taxon2.lineage.startswith(row.lineage)).count()
+        if children_count == 1: # This is a leaf node
+            print(row.tid, row.lineage)
+            response = bugwood.get_images(row.name)
+            if response:
+                print '======'
+                print response['rows']
+                print '======'
+                '''Note: The web2py docs state that the argument for bulk_insert
+                is a list of dicts. However, it appears that MySQL requires
+                a tuple of dicts instead.'''
+                db.bugwood.bulk_insert(tuple(response['rows']))
+
+def carousel():
+    scientificName = 'Oryctes rhinoceros'
+    images = db(db.bugwood.scientificName==scientificName).select()
+    return locals()
+
+def bs4_test():
+    return locals()

@@ -32,14 +32,15 @@ if not request.env.web2py_runtime_gae:
     #          pool_size=myconf.get('db.pool_size'),
     #          migrate_enabled=myconf.get('db.migrate'),
     #          check_reserved=['all'])
-    
+
     # To enable saving this code in a public GitHub repo, the database connection string will be
     # read from a file, db_connection_string.txt, which is black listed in .gitignore.
     # Format of the connection string is: mysql://user:password@server/pestlist
     with open("db_connection_string.txt", "r") as f:
         db_connection_string = f.read()
         print('db_connection_string read: ', db_connection_string)
-    db = DAL(db_connection_string, fake_migrate_all=True)
+    db = DAL(db_connection_string, migrate=True, fake_migrate=True)
+    #db = DAL(db_connection_string)
 else:
     # ---------------------------------------------------------------------
     # connect to Google BigTable (optional 'google:datastore://namespace')
@@ -100,7 +101,7 @@ plugins = PluginManager()
 # -------------------------------------------------------------------------
 # create all tables needed by auth if not custom tables
 # -------------------------------------------------------------------------
-auth.define_tables(username=False, signature=False)
+auth.define_tables(username=False, signature=False, migrate=False)
 
 # -------------------------------------------------------------------------
 # configure email
@@ -135,6 +136,19 @@ auth.settings.reset_password_requires_verification = True
 # >>> rows = db(db.mytable.myfield == 'value').select(db.mytable.ALL)
 # >>> for row in rows: print row.id, row.myfield
 # -------------------------------------------------------------------------
+
+
+db.define_table('bugwood',
+    Field('autid'),
+    Field('baseimgurl'),
+    Field('imgnum'),
+    Field('landscape'),
+    Field('organization'),
+    Field('photographer'),
+    Field('scientificName'),
+    Field('sub_id'),
+    Field('sub_name'),
+)
 
 
 '''
@@ -260,9 +274,28 @@ db.define_table('geo',
 db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
 
 
+'''
+taxgeo
+'''
+db.define_table('taxgeo',
+    Field('t1', db.taxon2),
+    Field('name', db.geo)
+)
+
+
 db.define_table('image',
     Field('t1', db.taxon2),
-    Field('image_link', type='text'),
+    Field('url', type='text', unique=True),
+    Field('attribution'),
+    Field('weight', type='integer', default=0)
+)
+
+
+db.define_table('image2',
+    Field('t1', db.taxon2),
+    Field('url', unique=True),
+    Field('attribution'),
+    Field('weight', type='integer', default=0)
 )
 
 
@@ -336,6 +369,33 @@ db.define_table('factsheet',
     Field('url'),
 )
 
+
+db.define_table('bwood',
+    Field('autid'),
+    Field('baseimgurl'),
+    Field('imgnum'),
+    Field('landscape'),
+    Field('organization'),
+    Field('photographer'),
+    Field('scientificName'),
+    Field('sub_id'),
+    Field('sub_name')
+)
+
+db.define_table('b',
+    # Field('autid'),
+    Field('baseimgurl'),
+    Field('imgnum'),
+    Field('landscape'),
+    Field('organization'),
+    Field('photographer'),
+    Field('scientificName'),
+    Field('sub_id'),
+    Field('sub_name')
+)
+
+
+db.define_table('a', Field('a'), Field('b'))
 
 # -------------------------------------------------------------------------
 # after defining tables, uncomment below to enable auditing

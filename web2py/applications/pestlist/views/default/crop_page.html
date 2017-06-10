@@ -93,6 +93,17 @@
 
           <p><b>Lineage: </b>{{=pest['lineage']}}</p>
 
+          <!-- <p><b>Micronesian distribution:</b>
+          {{ sgeo = get_geo(pest['id']) }}
+          {{ if sgeo: }}
+            {{ first = True }}
+            {{ for s in sgeo: }}
+              {{ if not first: }},{{ pass }} {{ first = False }}
+              {{ =XML(s['name']) }}
+            {{pass}}
+          {{pass}}
+          </p> -->
+
           <p><b>Fact sheets: </b>
           {{s=get_factsheets(pest['id'])}}
           {{if s:}}
