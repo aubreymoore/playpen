@@ -1,19 +1,68 @@
 # -*- coding: utf-8 -*-
+def temp():
+    sql = 'select * from taxon2'
+    data = db.executesql(sql, as_dict=True)
+    return locals()
 
-def load_x():
-    sql = "select name, url from taxon2, pacific_pests where name=scientific_name;"
-    return db.executesql(sql, as_dict=True)
+
+
+
+def populate_vernacular_table():
+    import requests
+
+    sql = "select id, tid from taxon2"
+    taxa = db.executesql(sql, as_dict=True)
+    mylist = []
+    i = 0
+    for taxon in taxa:
+        i += 1
+        print '{} of 806 id={} tid={}'.format(i, taxon['id'], taxon['tid'])
+        if taxon['tid'].isdigit(): # tid is a GBIF id
+            url = 'http://api.gbif.org/v1/species/{}/vernacularNames'.format(taxon['tid'])
+            mydict = requests.get(url).json()
+            for r in mydict['results']:
+                if r['language'] in ['eng','']:
+                    db.vernacular.insert(name = r['vernacularName'],
+                        language = r['language'], t1 = taxon['id'], source = url)
+    print 'FINISHED'
+    return locals()
+
+
+def populate_synonym_table():
+    import requests
+
+    sql = "select id, tid from taxon2"
+    taxa = db.executesql(sql, as_dict=True)
+    i = 0
+    for taxon in taxa:
+        i += 1
+        print '{} of 806 id={} tid={}'.format(i, taxon['id'], taxon['tid'])
+        if taxon['tid'].isdigit(): # tid is a GBIF id
+            url = 'http://api.gbif.org/v1/species/{}/synonyms'.format(taxon['tid'])
+            mydict = requests.get(url).json()
+            for r in mydict['results']:
+                    db.synonym2.insert(name = r['scientificName'], t1 = taxon['id'], source = url)
+    print 'FINISHED'
+    return locals()
+
+
 
 def crop_index():
 
 
     def get_image(t1):
-        res = db(db.image.t1==t1).select('image_link').first()
+        res = db(db.image.t1==t1).select('url').first()
         if res:
-            return res['_extra']['image_link']
+            return res['_extra']['url']
         else:
             return None
 
+    def get_vernacular_names(t1):
+        res = db(db.vernacular.t1==t1).select('name')
+        if res:
+            return res
+        else:
+            return None
 
     sql = '''SELECT *
              FROM taxon2
@@ -45,12 +94,41 @@ def taxon_info(taxon2_id):
 
 def crop_page():
 
-    def get_image(t1):
-        res = db(db.image.t1==t1).select('image_link').first()
+    def get_synonyms(t1):
+        res = db(db.synonym2.t1==t1).select('name')
         if res:
-            return res['_extra']['image_link']
+            return res
         else:
             return None
+
+    def get_vernacular_names(t1):
+        res = db(db.vernacular.t1==t1).select('name')
+        if res:
+            return res
+        else:
+            return None
+
+    def get_image(t1):
+        res = db(db.image.t1==t1).select('url').first()
+        if res:
+            return res['url']
+        else:
+            return None
+
+    def get_factsheets(t1):
+        res = db(db.factsheet.t1==t1).select('url').first()
+        print res
+        if res:
+            return res['_extra']['url']
+        else:
+            return None
+
+    # def get_geo(t1):
+    #     res = db(db.geo.t1==t1).select('name')
+    #     if res:
+    #         return res
+    #     else:
+    #         return None
 
     taxon2_id = request.args(0)
     if not taxon2_id:
@@ -676,3 +754,41 @@ def user():
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
     return dict(form=auth())
+
+
+def get_bugwood_images():
+    import bugwood
+    return bugwood.get_images('Oryctes rhinoceros')
+
+
+def test_populate_image_table_from_bugwood():
+    import bugwood
+    for row in db().select(db.taxon2.ALL, limitby=(100, 120)):
+        children_count = db(db.taxon2.lineage.startswith(row.lineage)).count()
+        if children_count == 1: # This is a leaf node
+            print(row.id, row.lineage)
+            response = bugwood.get_images(row.name)
+            if response:
+                for r in response['rows']:                    
+                    t1 = row.id
+                    url = 'https://{}192x128/{}.jpg'.format(r['baseimgurl'], r['imgnum'])
+                    attribution = '{}, {}'.format(r['photographer'], r['organization'])
+                    source = 'https://www.invasive.org/browse/detail.cfm?imgnum={}'.format(r['imgnum'])
+                    print t1, url, attribution, source
+                    db.image.insert(t1 = t1, url=url, attribution=attribution, source=source)
+
+
+def carousel():
+    scientificName = 'Oryctes rhinoceros'
+    images = db(db.bugwood.scientificName==scientificName).select()
+    return locals()
+
+def bs4_test():
+    return locals()
+
+def all_tables_to_csv():
+    db.export_to_csv_file(open('alltables.csv', 'wb'))
+    return locals()
+
+def factsheet_export():
+    return db.factsheet

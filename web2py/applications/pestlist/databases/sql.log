@@ -1,4 +1,4 @@
-timestamp: 2017-06-08T21:21:05.886572
+timestamp: 2017-06-11T07:23:49.201699
 CREATE TABLE bugwood(
     id INT AUTO_INCREMENT NOT NULL,
     autid VARCHAR(512),
@@ -13,7 +13,7 @@ CREATE TABLE bugwood(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.888573
+timestamp: 2017-06-11T07:23:49.204756
 CREATE TABLE pacific_pests(
     id INT AUTO_INCREMENT NOT NULL,
     url VARCHAR(512),
@@ -21,7 +21,7 @@ CREATE TABLE pacific_pests(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.890653
+timestamp: 2017-06-11T07:23:49.208020
 CREATE TABLE location_recode(
     id INT AUTO_INCREMENT NOT NULL,
     raw_string VARCHAR(512),
@@ -31,24 +31,14 @@ CREATE TABLE location_recode(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.892378
+timestamp: 2017-06-11T07:23:49.210209
 CREATE TABLE extracted_names(
     id INT AUTO_INCREMENT NOT NULL,
     extracted_names_json LONGTEXT,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.894552
-CREATE TABLE taxon(
-    id INT AUTO_INCREMENT NOT NULL,
-    tid VARCHAR(512) UNIQUE,
-    name VARCHAR(512),
-    trank VARCHAR(512),
-    parent_tid VARCHAR(512), CONSTRAINT  `FK_taxon_parent_tid__constraint` FOREIGN KEY (parent_tid) REFERENCES taxon (tid) ON DELETE CASCADE,
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-08T21:21:05.896757
+timestamp: 2017-06-11T07:23:49.212503
 CREATE TABLE taxon2(
     id INT AUTO_INCREMENT NOT NULL,
     tid VARCHAR(512) UNIQUE,
@@ -59,7 +49,7 @@ CREATE TABLE taxon2(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.898687
+timestamp: 2017-06-11T07:23:49.214654
 CREATE TABLE syn(
     id INT AUTO_INCREMENT NOT NULL,
     taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
@@ -67,7 +57,7 @@ CREATE TABLE syn(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.900625
+timestamp: 2017-06-11T07:23:49.216967
 CREATE TABLE vernacular(
     id INT AUTO_INCREMENT NOT NULL,
     t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
@@ -77,7 +67,7 @@ CREATE TABLE vernacular(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.902518
+timestamp: 2017-06-11T07:23:49.219120
 CREATE TABLE synonym2(
     id INT AUTO_INCREMENT NOT NULL,
     t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
@@ -86,16 +76,16 @@ CREATE TABLE synonym2(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.904241
+timestamp: 2017-06-11T07:23:49.221114
 CREATE TABLE geo(
     id INT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(512) UNIQUE,
+    name VARCHAR(255) UNIQUE,
     parent_name VARCHAR(512),
     lineage VARCHAR(512),
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.906310
+timestamp: 2017-06-11T07:23:49.223235
 CREATE TABLE taxgeo(
     id INT AUTO_INCREMENT NOT NULL,
     t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
@@ -103,15 +93,29 @@ CREATE TABLE taxgeo(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.908182
+timestamp: 2017-06-11T07:23:49.225501
 CREATE TABLE image(
     id INT AUTO_INCREMENT NOT NULL,
     t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
-    image_link LONGTEXT,
+    url VARCHAR(255) UNIQUE,
+    attribution VARCHAR(255),
+    source VARCHAR(255),
+    weight INT,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.910392
+timestamp: 2017-06-11T07:23:49.227948
+CREATE TABLE image2(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    url VARCHAR(255) UNIQUE,
+    attribution VARCHAR(255),
+    source VARCHAR(255),
+    weight INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-06-11T07:23:49.230176
 CREATE TABLE associate2(
     id INT AUTO_INCREMENT NOT NULL,
     t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
@@ -121,81 +125,17 @@ CREATE TABLE associate2(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.912285
+timestamp: 2017-06-11T07:23:49.232097
 CREATE TABLE resolved_names(
     id INT AUTO_INCREMENT NOT NULL,
     supplied_name_string VARCHAR(512),
-    classification_path VARCHAR(512) UNIQUE,
-    classification_path_ids VARCHAR(512) UNIQUE,
+    classification_path VARCHAR(255) UNIQUE,
+    classification_path_ids VARCHAR(255) UNIQUE,
     classification_path_ranks VARCHAR(512),
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.923772
-CREATE TABLE uno(
-    id INT AUTO_INCREMENT NOT NULL,
-    data_sources_number VARCHAR(512),
-    in_curated_sources VARCHAR(512),
-    is_known_name VARCHAR(512),
-    supplied_name_string VARCHAR(512),
-    canonical_form VARCHAR(512),
-    classification_path VARCHAR(512),
-    classification_path_ids VARCHAR(512),
-    classification_path_ranks VARCHAR(512),
-    current_name_string VARCHAR(512),
-    current_taxon_id VARCHAR(512),
-    data_source_id VARCHAR(512),
-    data_source_title VARCHAR(512),
-    edit_distance VARCHAR(512),
-    gni_uuid VARCHAR(512),
-    imported_at VARCHAR(512),
-    match_type VARCHAR(512),
-    match_value VARCHAR(512),
-    name_string VARCHAR(512),
-    prescore VARCHAR(512),
-    score VARCHAR(512),
-    taxon_id VARCHAR(512),
-    is_active CHAR(1),
-    created_on DATETIME,
-    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    modified_on DATETIME,
-    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-08T21:21:05.932232
-CREATE TABLE duo(
-    id INT AUTO_INCREMENT NOT NULL,
-    data_sources_number VARCHAR(512),
-    in_curated_sources VARCHAR(512),
-    is_known_name VARCHAR(512),
-    supplied_name_string VARCHAR(512),
-    canonical_form VARCHAR(512),
-    classification_path VARCHAR(512),
-    classification_path_ids VARCHAR(512),
-    classification_path_ranks VARCHAR(512),
-    current_name_string VARCHAR(512),
-    current_taxon_id VARCHAR(512),
-    data_source_id VARCHAR(512),
-    data_source_title VARCHAR(512),
-    edit_distance VARCHAR(512),
-    gni_uuid VARCHAR(512),
-    imported_at VARCHAR(512),
-    match_type VARCHAR(512),
-    match_value VARCHAR(512),
-    name_string VARCHAR(512),
-    prescore VARCHAR(512),
-    score VARCHAR(512),
-    taxon_id VARCHAR(512),
-    is_active CHAR(1),
-    created_on DATETIME,
-    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    modified_on DATETIME,
-    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-08T21:21:05.934484
+timestamp: 2017-06-11T07:23:49.234375
 CREATE TABLE factsheet(
     id INT AUTO_INCREMENT NOT NULL,
     t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
@@ -203,36 +143,7 @@ CREATE TABLE factsheet(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.936548
-CREATE TABLE bwood(
-    id INT AUTO_INCREMENT NOT NULL,
-    autid VARCHAR(512),
-    baseimgurl VARCHAR(512),
-    imgnum VARCHAR(512),
-    landscape VARCHAR(512),
-    organization VARCHAR(512),
-    photographer VARCHAR(512),
-    scientificName VARCHAR(512),
-    sub_id VARCHAR(512),
-    sub_name VARCHAR(512),
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-08T21:21:05.939526
-CREATE TABLE b(
-    id INT AUTO_INCREMENT NOT NULL,
-    baseimgurl VARCHAR(512),
-    imgnum VARCHAR(512),
-    landscape VARCHAR(512),
-    organization VARCHAR(512),
-    photographer VARCHAR(512),
-    scientificName VARCHAR(512),
-    sub_id VARCHAR(512),
-    sub_name VARCHAR(512),
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-08T21:21:05.940988
+timestamp: 2017-06-11T07:23:49.235957
 CREATE TABLE a(
     id INT AUTO_INCREMENT NOT NULL,
     a VARCHAR(512),
@@ -240,106 +151,67 @@ CREATE TABLE a(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 faked!
-timestamp: 2017-06-08T21:21:05.947512
-CREATE TABLE uno_archive(
-    current_record INT  , INDEX current_record__idx (current_record), FOREIGN KEY (current_record) REFERENCES uno (id) ON DELETE CASCADE,
-    id INT AUTO_INCREMENT NOT NULL,
-    data_sources_number VARCHAR(512),
-    in_curated_sources VARCHAR(512),
-    is_known_name VARCHAR(512),
-    supplied_name_string VARCHAR(512),
-    canonical_form VARCHAR(512),
-    classification_path VARCHAR(512),
-    classification_path_ids VARCHAR(512),
-    classification_path_ranks VARCHAR(512),
-    current_name_string VARCHAR(512),
-    current_taxon_id VARCHAR(512),
-    data_source_id VARCHAR(512),
-    data_source_title VARCHAR(512),
-    edit_distance VARCHAR(512),
-    gni_uuid VARCHAR(512),
-    imported_at VARCHAR(512),
-    match_type VARCHAR(512),
-    match_value VARCHAR(512),
-    name_string VARCHAR(512),
-    prescore VARCHAR(512),
-    score VARCHAR(512),
-    taxon_id VARCHAR(512),
-    is_active CHAR(1),
-    created_on DATETIME,
-    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    modified_on DATETIME,
-    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-08T21:21:05.952817
-CREATE TABLE duo_archive(
-    current_record INT  , INDEX current_record__idx (current_record), FOREIGN KEY (current_record) REFERENCES duo (id) ON DELETE CASCADE,
-    id INT AUTO_INCREMENT NOT NULL,
-    data_sources_number VARCHAR(512),
-    in_curated_sources VARCHAR(512),
-    is_known_name VARCHAR(512),
-    supplied_name_string VARCHAR(512),
-    canonical_form VARCHAR(512),
-    classification_path VARCHAR(512),
-    classification_path_ids VARCHAR(512),
-    classification_path_ranks VARCHAR(512),
-    current_name_string VARCHAR(512),
-    current_taxon_id VARCHAR(512),
-    data_source_id VARCHAR(512),
-    data_source_title VARCHAR(512),
-    edit_distance VARCHAR(512),
-    gni_uuid VARCHAR(512),
-    imported_at VARCHAR(512),
-    match_type VARCHAR(512),
-    match_value VARCHAR(512),
-    name_string VARCHAR(512),
-    prescore VARCHAR(512),
-    score VARCHAR(512),
-    taxon_id VARCHAR(512),
-    is_active CHAR(1),
-    created_on DATETIME,
-    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    modified_on DATETIME,
-    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-08T21:29:23.056124
-CREATE TABLE bugwood(
-    id INT AUTO_INCREMENT NOT NULL,
-    autid VARCHAR(512),
-    baseimgurl VARCHAR(512),
-    imgnum VARCHAR(512),
-    landscape VARCHAR(512),
-    organization VARCHAR(512),
-    photographer VARCHAR(512),
-    scientificName VARCHAR(512),
-    sub_id VARCHAR(512),
-    sub_name VARCHAR(512),
-    PRIMARY KEY (id)
-) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
-timestamp: 2017-06-10T11:34:01.724247
-ALTER TABLE image ADD url LONGTEXT UNIQUE;
-faked!
-timestamp: 2017-06-10T11:34:01.727086
-ALTER TABLE image ADD attribution VARCHAR(512);
-faked!
-timestamp: 2017-06-10T11:34:01.728164
-ALTER TABLE image ADD weight INT;
-faked!
-timestamp: 2017-06-10T11:34:01.728735
-ALTER TABLE image DROP COLUMN image_link;
-faked!
-timestamp: 2017-06-10T11:44:42.430798
-CREATE TABLE image2(
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE image;
+timestamp: 2017-06-11T07:48:25.672520
+CREATE TABLE image(
     id INT AUTO_INCREMENT NOT NULL,
     t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
-    url VARCHAR(512) UNIQUE,
-    attribution VARCHAR(512),
+    url VARCHAR(255) UNIQUE,
+    attribution VARCHAR(255),
+    source VARCHAR(255),
     weight INT,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
-faked!
+timestamp: 2017-06-11T07:50:13.004695
+CREATE TABLE image(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    url VARCHAR(255) UNIQUE,
+    attribution VARCHAR(255),
+    source VARCHAR(255),
+    weight INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-06-11T07:56:33.235503
+CREATE TABLE image3(
+    id INT AUTO_INCREMENT NOT NULL,
+    t1 INT  , INDEX t1__idx (t1), FOREIGN KEY (t1) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-06-11T08:26:45.860804
+CREATE TABLE image4(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-06-11T10:14:24.270968
+CREATE TABLE image4(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-06-11T10:15:24.172560
+CREATE TABLE image4(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-06-11T10:17:45.357472
+CREATE TABLE image4(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-06-11T10:18:04.621658
+CREATE TABLE image4(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-06-11T10:18:26.069442
+CREATE TABLE image4(
+    id INT AUTO_INCREMENT NOT NULL,
+    taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;

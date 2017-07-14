@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{{ extend 'default/bs4.html' }}
+  <div class="container">
+    <div class="jumbotron">
+      <div class="media">
+        <div class="media-left media-middle">
+          {{s=get_image(crop_info['id'])}}
+          {{if s:}}
+            <img src='{{=s['url']}}' width=192/>
+          {{ else: }}
+            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
+          {{pass}}
+        </div>
+        <div class="media-body">
+          {{name = crop_info['name']}}
+          {{if crop_info['trank'] in ['genus', 'species', 'subspecies']:}}
+            <h1 class="media-heading"><i>{{=name}}</i></h1>
+          {{else:}}
+            <h1 class="media-heading">{{=name}}</h1>
+          {{pass}}
+
+          <p><b>Vernacular names: </b>
+          {{ #vnames = get_vernacular_names(crop_info['id']) }}
+          {{ #if vnames: }}
+            {{ #first = True }}
+            {{ #for vname in vnames: }}
+              {{ #if not first: }}
+              |
+              {{ #pass }}
+              {{ #first = False }}
+              {{ #=XML(vname['name']) }}
+            {{#pass}}
+          {{#pass}}
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <ul class="media-list">
+      {{for pest in pests:}}
+      {{name = pest['name']}}
+      <li class="media">
+        <div class="media-left">
+          {{s=get_image(pest['id'])}}
+          {{if s:}}
+            <img src='{{=s['url']}}' width=192/>
+          {{else:}}
+            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
+          {{pass}}
+        </div>
+        <div class="media-body">
+          {{if pest['trank'] in ['genus', 'species', 'subspecies']:}}
+            <h3 class="media-heading"><i>{{=name}}</i></h3><br>
+          {{else:}}
+            <h3 class="media-heading">{{=name}}</h3><br>
+          {{pass}}
+
+          <p>
+          <b>Vernacular names: </b>
+          {{ #vnames = get_vernacular_names(pest['id']) }}
+          {{ #if vnames: }}
+            {{ #first = True }}
+            {{ #for vname in vnames: }}
+              {{ #if not first: }},{{ #pass }} {{ #first = False }}
+              {{ #=XML(vname['name']) }}
+            {{#pass}}
+          {{#pass}}
+          </p>
+
+          <p>
+          <b>Scientific names (synonyms): </b>
+          {{ snames = get_synonyms(pest['id']) }}
+          {{ if snames: }}
+            {{ first = True }}
+            {{ for sname in snames: }}
+              {{ if not first: }},{{ pass }} {{ first = False }}
+              {{ =XML(sname['name']) }}
+            {{pass}}
+          {{pass}}
+          </p>
+
+          <p><b>Lineage: </b>{{=pest['lineage']}}</p>
+
+          <p><b>Fact sheets: </b>
+          {{#s=get_factsheets(pest['id'])}}
+          {{#if s:}}
+            <a href="{{#=XML(s)}}"><button>PestNet</button></a><br>
+          {{#pass}}
+          </p>
+
+          <p><b>General information: </b>
+          <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
+          <a href="https://demo.gbif.org/species/{{=pest['tid']}}"><button>GBIF {{=pest['tid']}}</button></a>
+          </p>
+
+          <p><b>Search for images: </b>
+
+          <a href="https://www.insectimages.org/search/action.cfm?q={{=name}}">
+          <button>BugWood</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.myspecies.info&safe=images">
+          <button>guaminsects.mysecies.info</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.net&safe=images">
+          <button>guaminsects.net</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=inaturalist.org&safe=images">
+          <button>inaturalist.org</button></a>
+
+          <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&safe=images">
+          <button>anywhere(Google)</button></a>
+
+          <a href="https://www.bing.com/images/search?q={{=name}}">
+          <button>anywhere(Bing)</button></a>
+          </p>
+        </div>
+      </li>
+      <hr>
+      {{ pass }}
+    </ul>
+   </div>

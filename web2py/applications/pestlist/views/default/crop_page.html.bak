@@ -10,66 +10,45 @@
 </head>
 
 <body>
-  Hi
-</body>
-</html>
-
-  <!-- <div class="container">
+  <div class="container">
     <div class="jumbotron">
       <div class="media">
         <div class="media-left media-middle">
-          {{s=get_image(crop['id'])}}
-          {{if s:}}
-          {{=XML(s)}}
-          {{pass}}
-        </div>
-        <div class="media-body">
           {{s=get_image(crop_info['id'])}}
           {{if s:}}
             {{=XML(s)}}
+          {{ else: }}
+            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
           {{pass}}
-          <h1 class="media-heading"><i>Cocos nucifera</i><br><small>Coconut palm</small></h1><br>
-          <p><b>Vernacular names: </b> coco-da-bahia , coco-da-praia , coconut , coconut palm , copra , coqueiro-da-bahia , coqueiro-da-praia , khopar</p>
         </div>
-      </div>
-      <div class="container">
-        <div class="jumbotron">
-  </div> -->
+        <div class="media-body">
 
-
-  <!-- <div class="container">
-    <div class="jumbotron">
-      <div class="media">
-        <div class="media-left media-middle">
-          <!-- {{s=get_image(crop_info['id'])}}
-          {{if s:}}
-            {{=XML(s)}}
-          {{pass}} -->
-        <!-- </div>
-        <div class="media-body"> -->
           {{name = crop_info['name']}}
-          <!-- {{if crop_info['trank'] in ['genus', 'species', 'subspecies']:}}
-            <h1 class="media-heading"><i>{{=name}}</i></h1><br>
+          {{if crop_info['trank'] in ['genus', 'species', 'subspecies']:}}
+            <h1 class="media-heading"><i>{{=name}}</i></h1>
           {{else:}}
-            <h1>{{=name}}</h1><br>
-          {{pass}} -->
-          <!-- <p><b>Vernacular names: </b>
+            <h1 class="media-heading">{{=name}}</h1>
+          {{pass}}
+
+          <p><b>Vernacular names: </b>
           {{ vnames = get_vernacular_names(crop_info['id']) }}
           {{ if vnames: }}
             {{ first = True }}
             {{ for vname in vnames: }}
-              {{ if not first: }},
+              {{ if not first: }}
+              |
               {{ pass }}
               {{ first = False }}
               {{ =XML(vname['name']) }}
             {{pass}}
           {{pass}}
-          </p> -->
-        <!-- </div>
-      </div>
-    </div> -->
+          </p>
 
-    <!-- <ul class="media-list">
+        </div>
+      </div>
+    </div>
+
+    <ul class="media-list">
       {{for pest in pests:}}
       {{name = pest['name']}}
       <li class="media">
@@ -77,6 +56,8 @@
           {{s=get_image(pest['id'])}}
           {{if s:}}
             {{=XML(s)}}
+          {{else:}}
+            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
           {{pass}}
         </div>
         <div class="media-body">
@@ -125,6 +106,10 @@
           </p>
 
           <p><b>Search for images: </b>
+
+          <a href="https://www.insectimages.org/search/action.cfm?q={{=name}}">
+          <button>BugWood</button></a>
+
           <a href="https://www.google.com/search?as_st=y&tbm=isch&as_q={{=name}}&as_sitesearch=guaminsects.myspecies.info&safe=images">
           <button>guaminsects.mysecies.info</button></a>
 
@@ -140,8 +125,12 @@
           <a href="https://www.bing.com/images/search?q={{=name}}">
           <button>anywhere(Bing)</button></a>
           </p>
-          <hr>
         </div>
       </li>
-    </ul> -->
-  <!-- </div> -->
+      <hr>
+      {{ pass }}
+    </ul>
+   </div>
+</body>
+
+</html>

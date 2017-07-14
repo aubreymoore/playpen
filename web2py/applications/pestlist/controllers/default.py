@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+def temp():
+    grid=SQLFORM.grid(db.associate2)
+    return locals()
+
 
 
 def populate_vernacular_table():
@@ -45,9 +49,9 @@ def crop_index():
 
 
     def get_image(t1):
-        res = db(db.image.t1==t1).select('image_link').first()
+        res = db(db.image.t1==t1).select('url').first()
         if res:
-            return res['_extra']['image_link']
+            return res['_extra']['url']
         else:
             return None
 
@@ -103,9 +107,9 @@ def crop_page():
             return None
 
     def get_image(t1):
-        res = db(db.image.t1==t1).select('image_link').first()
+        res = db(db.image.t1==t1).select('url').first()
         if res:
-            return res['_extra']['image_link']
+            return res['url']
         else:
             return None
 
@@ -117,12 +121,12 @@ def crop_page():
         else:
             return None
 
-    def get_geo(t1):
-        res = db(db.geo.t1==t1).select('name')
-        if res:
-            return res
-        else:
-            return None
+    # def get_geo(t1):
+    #     res = db(db.geo.t1==t1).select('name')
+    #     if res:
+    #         return res
+    #     else:
+    #         return None
 
     taxon2_id = request.args(0)
     if not taxon2_id:
@@ -755,21 +759,22 @@ def get_bugwood_images():
     return bugwood.get_images('Oryctes rhinoceros')
 
 
-def test_populate_image_table():
+def test_populate_image_table_from_bugwood():
     import bugwood
-    for row in db(db.taxon2.id > 0).select():
+    for row in db().select(db.taxon2.ALL, limitby=(100, 120)):
         children_count = db(db.taxon2.lineage.startswith(row.lineage)).count()
         if children_count == 1: # This is a leaf node
-            print(row.tid, row.lineage)
+            print(row.id, row.lineage)
             response = bugwood.get_images(row.name)
             if response:
-                print '======'
-                print response['rows']
-                print '======'
-                '''Note: The web2py docs state that the argument for bulk_insert
-                is a list of dicts. However, it appears that MySQL requires
-                a tuple of dicts instead.'''
-                db.bugwood.bulk_insert(tuple(response['rows']))
+                for r in response['rows']:                    
+                    t1 = row.id
+                    url = 'https://{}192x128/{}.jpg'.format(r['baseimgurl'], r['imgnum'])
+                    attribution = '{}, {}'.format(r['photographer'], r['organization'])
+                    source = 'https://www.invasive.org/browse/detail.cfm?imgnum={}'.format(r['imgnum'])
+                    print t1, url, attribution, source
+                    db.image.insert(t1 = t1, url=url, attribution=attribution, source=source)
+
 
 def carousel():
     scientificName = 'Oryctes rhinoceros'
@@ -778,3 +783,10 @@ def carousel():
 
 def bs4_test():
     return locals()
+
+def all_tables_to_csv():
+    db.export_to_csv_file(open('alltables.csv', 'wb'))
+    return locals()
+
+def factsheet_export():
+    return db.factsheet

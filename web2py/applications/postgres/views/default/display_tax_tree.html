@@ -1,0 +1,65 @@
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
+</head>
+
+<body>
+
+  <h2>Taxonomic Tree</h2> {{=form}}
+
+  Selected node:
+  <b><div id='mytext'>None</div></b>
+
+  <br>
+
+   <input
+     type='button'
+     value='Add new taxon'
+     onclick='add_new_record()'
+   >
+
+  <br><br>
+
+   <input
+     type="button"
+     value="Expand all"
+     onclick="$('#jstree').jstree('open_all');"
+   >
+
+   <input
+     type="button"
+     value="Collapse all"
+     onclick="$('#jstree').jstree('close_all');"
+   >
+
+  <br><br>
+
+  <div id="jstree" style="overflow:scroll; height:400px;">
+  </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
+
+  <script>
+
+    // The following is an anonymous (unmamed) function written using the
+    // immediately invoked function expression (IIFE) pattern which loads JSON
+    // data into jstree.
+    $(function(){
+      $('#jstree').jstree({core: {data: {{ =XML(m) }}, multiple: false}});
+    })
+
+    $('#jstree').on("changed.jstree", function(e, data) {
+      //console.log(data.selected);
+      document.getElementById('mytext').innerHTML = data.selected; })
+
+    function add_new_record() {
+        //document.getElementById("mytext").innerHTML = "creation of child node requested";
+        window.open ('/pestlist/appadmin/insert/db/taxon2','_self',false)
+    }
+
+    </script>
+
+</body>
+
+</html>

@@ -39,8 +39,7 @@ if not request.env.web2py_runtime_gae:
     with open("db_connection_string.txt", "r") as f:
         db_connection_string = f.read()
         print('db_connection_string read: ', db_connection_string)
-    db = DAL(db_connection_string, migrate=True, fake_migrate=True)
-    #db = DAL(db_connection_string)
+    db = DAL(db_connection_string, check_reserved=['mysql'])
 else:
     # ---------------------------------------------------------------------
     # connect to Google BigTable (optional 'google:datastore://namespace')
@@ -157,7 +156,7 @@ This is a temporary table containing pest sheets from the Pacific Pests and Path
 '''
 db.define_table('pacific_pests',
     Field('url'),
-    Field('scientific_name')
+    Field('scientific_name'),
 )
 
 
@@ -173,20 +172,13 @@ db.define_table('location_recode',
     Field('raw_string'),
     Field('location'),
     Field('confirmed', type='boolean'),
-    Field('new_island_record', type='boolean')
+    Field('new_island_record', type='boolean'),
 )
 
 
 db.define_table('extracted_names',
     Field('extracted_names_json', 'json'),
 )
-
-
-db.define_table('taxon',
-                Field('tid', unique=True),
-                Field('name'),
-                Field('trank'),
-                Field('parent_tid', 'reference taxon.tid'))
 
 
 '''
@@ -198,7 +190,7 @@ db.define_table('taxon2',
     Field('name'),
     Field('trank', compute=lambda r: compute_taxon_rank(r['parent_tid'])),
     Field('lineage', compute=lambda r: compute_taxon_lineage(r['parent_tid'], r['name'])),
-    format='%(name)s'
+    format='%(name)s',
 )
 # For root nodes, parent_tid is NULL; otherwise parent_node must refer to an existing tid
 db.taxon2.parent_tid.requires = IS_NULL_OR(IS_IN_DB(db, 'taxon2.tid', '%(name)s'))
@@ -228,7 +220,7 @@ syn
 '''
 db.define_table('syn',
     Field('taxon', 'reference taxon2'),
-    Field('synonym')
+    Field('synonym'),
 )
 
 
@@ -239,7 +231,7 @@ db.define_table('vernacular',
     Field('t1', db.taxon2),
     Field('language'),
     Field('source'),
-    Field('name')
+    Field('name'),
 )
 
 
@@ -263,12 +255,11 @@ def compute_lineage(parent_name, name):
     else:
         s = name
     return s
-
 db.define_table('geo',
-                Field('name', unique=True),
+                Field('name', unique=True, length=255),
                 Field('parent_name'),
                 Field('lineage', compute=lambda r: compute_lineage(r['parent_name'], r['name'])),
-                format='%(name)s'
+                format='%(name)s',
                )
 # For root node, parent_gid is NULL; otherwise parent_node must refer to an existing gid
 db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
@@ -277,26 +268,51 @@ db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
 '''
 taxgeo
 '''
-db.define_table('taxgeo',
-    Field('t1', db.taxon2),
-    Field('name', db.geo)
-)
+#db.define_table('taxgeo',
+#    Field('t1', db.taxon2),
+#    Field('name', db.geo),
+#)
 
 
-db.define_table('image',
-    Field('t1', db.taxon2),
-    Field('url', type='text', unique=True),
-    Field('attribution'),
-    Field('weight', type='integer', default=0)
-)
+'''
+image
+'''
+# db.define_table('image',
+#     Field('t1', db.taxon2),
+#     Field('url', length=255, unique=True),
+#     Field('attribution', length=255),
+#     Field('source', length=255),
+#     Field('weight', type='integer', default=0),
+# )
 
 
-db.define_table('image2',
-    Field('t1', db.taxon2),
-    Field('url', unique=True),
-    Field('attribution'),
-    Field('weight', type='integer', default=0)
-)
+# CREATE TABLE syn(
+#     id INT AUTO_INCREMENT NOT NULL,
+#     taxon INT  , INDEX taxon__idx (taxon), FOREIGN KEY (taxon) REFERENCES taxon2 (id) ON DELETE CASCADE,
+#     synonym VARCHAR(512),
+#     PRIMARY KEY (id)
+# ) ENGINE=InnoDB CHARACTER SET utf8;
+
+
+'''
+image2
+'''
+# db.define_table('image2',
+#     Field('t1', db.taxon2),
+#     Field('url', length=255, unique=True),
+#     Field('attribution', length=255),
+#     Field('source', length=255),
+#     Field('weight', type='integer', default=0),
+# )
+
+
+# db.define_table('image2',
+#     Field('t1', db.taxon2),
+#     Field('url'),
+#     Field('attribution'),
+#     Field('weight', type='integer', default=0),
+#     migrate=True, fake_migrate=True
+# )
 
 
 db.define_table('associate2',
@@ -309,60 +325,60 @@ db.define_table('associate2',
 
 db.define_table('resolved_names',
     Field('supplied_name_string'),
-    Field('classification_path', unique=True),
-    Field('classification_path_ids', unique=True),
+    Field('classification_path', unique=True, length=255),
+    Field('classification_path_ids', unique=True, length=255),
     Field('classification_path_ranks'),
 )
 
-db.define_table('uno',
-    Field('data_sources_number'),
-    Field('in_curated_sources'),
-    Field('is_known_name'),
-    Field('supplied_name_string'),
-    Field('canonical_form'),
-    Field('classification_path'),
-    Field('classification_path_ids'),
-    Field('classification_path_ranks'),
-    Field('current_name_string'),
-    Field('current_taxon_id'),
-    Field('data_source_id'),
-    Field('data_source_title'),
-    Field('edit_distance'),
-    Field('gni_uuid'),
-    Field('imported_at'),
-    Field('match_type'),
-    Field('match_value'),
-    Field('name_string'),
-    Field('prescore'),
-    Field('score'),
-    Field('taxon_id'),
-    auth.signature
-)
-
-db.define_table('duo',
-    Field('data_sources_number'),
-    Field('in_curated_sources'),
-    Field('is_known_name'),
-    Field('supplied_name_string'),
-    Field('canonical_form'),
-    Field('classification_path'),
-    Field('classification_path_ids'),
-    Field('classification_path_ranks'),
-    Field('current_name_string'),
-    Field('current_taxon_id'),
-    Field('data_source_id'),
-    Field('data_source_title'),
-    Field('edit_distance'),
-    Field('gni_uuid'),
-    Field('imported_at'),
-    Field('match_type'),
-    Field('match_value'),
-    Field('name_string'),
-    Field('prescore'),
-    Field('score'),
-    Field('taxon_id'),
-    auth.signature
-)
+# db.define_table('uno',
+#     Field('data_sources_number'),
+#     Field('in_curated_sources'),
+#     Field('is_known_name'),
+#     Field('supplied_name_string'),
+#     Field('canonical_form'),
+#     Field('classification_path'),
+#     Field('classification_path_ids'),
+#     Field('classification_path_ranks'),
+#     Field('current_name_string'),
+#     Field('current_taxon_id'),
+#     Field('data_source_id'),
+#     Field('data_source_title'),
+#     Field('edit_distance'),
+#     Field('gni_uuid'),
+#     Field('imported_at'),
+#     Field('match_type'),
+#     Field('match_value'),
+#     Field('name_string'),
+#     Field('prescore'),
+#     Field('score'),
+#     Field('taxon_id'),
+#     auth.signature
+# )
+#
+# db.define_table('duo',
+#     Field('data_sources_number'),
+#     Field('in_curated_sources'),
+#     Field('is_known_name'),
+#     Field('supplied_name_string'),
+#     Field('canonical_form'),
+#     Field('classification_path'),
+#     Field('classification_path_ids'),
+#     Field('classification_path_ranks'),
+#     Field('current_name_string'),
+#     Field('current_taxon_id'),
+#     Field('data_source_id'),
+#     Field('data_source_title'),
+#     Field('edit_distance'),
+#     Field('gni_uuid'),
+#     Field('imported_at'),
+#     Field('match_type'),
+#     Field('match_value'),
+#     Field('name_string'),
+#     Field('prescore'),
+#     Field('score'),
+#     Field('taxon_id'),
+#     auth.signature
+# )
 
 db.define_table('factsheet',
     Field('t1', db.taxon2),
@@ -370,34 +386,35 @@ db.define_table('factsheet',
 )
 
 
-db.define_table('bwood',
-    Field('autid'),
-    Field('baseimgurl'),
-    Field('imgnum'),
-    Field('landscape'),
-    Field('organization'),
-    Field('photographer'),
-    Field('scientificName'),
-    Field('sub_id'),
-    Field('sub_name')
-)
+# db.define_table('bwood',
+#     Field('autid'),
+#     Field('baseimgurl'),
+#     Field('imgnum'),
+#     Field('landscape'),
+#     Field('organization'),
+#     Field('photographer'),
+#     Field('scientificName'),
+#     Field('sub_id'),
+#     Field('sub_name')
+# )
+#
+# db.define_table('b',
+#     # Field('autid'),
+#     Field('baseimgurl'),
+#     Field('imgnum'),
+#     Field('landscape'),
+#     Field('organization'),
+#     Field('photographer'),
+#     Field('scientificName'),
+#     Field('sub_id'),
+#     Field('sub_name')
+# )
+#
+#
+#db.define_table('a', Field('a'), Field('b'))
 
-db.define_table('b',
-    # Field('autid'),
-    Field('baseimgurl'),
-    Field('imgnum'),
-    Field('landscape'),
-    Field('organization'),
-    Field('photographer'),
-    Field('scientificName'),
-    Field('sub_id'),
-    Field('sub_name')
-)
-
-
-db.define_table('a', Field('a'), Field('b'))
 
 # -------------------------------------------------------------------------
 # after defining tables, uncomment below to enable auditing
 # -------------------------------------------------------------------------
-auth.enable_record_versioning(db)
+#auth.enable_record_versioning(db)

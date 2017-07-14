@@ -329,3 +329,16 @@
 [2017-06-07 13:20:09] CREATE bugwood.py: 0
 [2017-06-07 13:23:47] EDIT pestlist/modules/bugwood.py: 12
 [2017-06-07 13:25:42] EDIT pestlist/modules/bugwood.py: 0
+[2017-06-10 15:06:29] EDIT pestlist/views/default/crop_page.html: -12
+[2017-06-10 15:16:42] EDIT pestlist/views/default/crop_page.html: -10
+[2017-06-10 22:04:19] EDIT pestlist/models/db.py: 1
+[2017-06-10 22:09:31] EDIT pestlist/models/db.py: 10
+[2017-06-11 10:18:53] EDIT pestlist/models/db.py: -3
+[2017-06-11 13:26:30] EDIT pestlist/controllers/default.py: 3
+[2017-06-11 13:31:07] EDIT pestlist/models/db.py: -4
+[2017-06-11 17:09:01] EDIT pestlist/controllers/default.py: 2
+[2017-07-13 19:34:31] EDIT pestlist/controllers/default.py: 3
+[2017-07-13 19:35:56] EDIT pestlist/controllers/default.py: 0
+[2017-07-13 19:38:06] EDIT pestlist/controllers/default.py: 0
+[2017-07-13 19:38:57] EDIT pestlist/controllers/default.py: 1
+[2017-07-13 19:42:00] EDIT pestlist/controllers/default.py: -1

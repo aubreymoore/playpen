@@ -1,0 +1,806 @@
+name1.id,name1.taxon,name1.name_type,name1.name
+2,1625,2,Animalia
+3,1626,2,Arthropoda
+4,1627,2,Arachnida
+5,1628,2,Prostigmata
+6,1629,2,Tarsonemidae
+7,1630,2,Polyphagotarsonemus
+8,1631,2,Polyphagotarsonemus latus
+9,1632,2,Tetranychidae
+10,1633,2,Eotetranychus
+11,1634,2,Eotetranychus cendanai
+12,1635,2,Tetranychus
+13,1636,2,Tetranychus neocaledonicus
+14,1637,2,Tetranychus truncatus
+15,1638,2,Tetranychus tumidus
+16,1639,2,Tetranychus urticae
+17,1640,2,Insecta
+18,1641,2,Coleoptera
+19,1642,2,Brentidae
+20,1643,2,Cylas
+21,1644,2,Cylas formicarius
+22,1645,2,Buprestidae
+23,1646,2,Agrilus
+24,1647,2,Agrilus occipitalis
+25,1648,2,Chrysobothris
+26,1649,2,Chrysobothris costata
+27,1650,2,Cerambycidae
+28,1651,2,Caroliniella
+29,1652,2,Caroliniella aenescens
+30,1653,2,Ceresium
+31,1654,2,Ceresium unicolor
+32,1655,2,Chlorophorus
+33,1656,2,Chlorophorus annularis
+34,1657,2,Pelargoderus
+35,1658,2,Pelargoderus luteosparsus
+36,1659,2,Cetoniidae
+37,1660,2,Protaetia
+38,1661,2,Protaetia fusca
+39,1662,2,Protaetia orientalis
+40,1663,2,Chrysomelidae
+41,1664,2,Aulacophora
+42,1665,2,Aulacophora abdominalis
+43,1666,2,Aulacophora flavomarginata
+44,1667,2,Aulacophora marginalis
+45,1668,2,Aulacophora quadrimaculata
+46,1669,2,Brontispa
+47,1670,2,Brontispa chalybeipennis
+48,1671,2,Brontispa mariana
+49,1672,2,Brontispa palauensis
+50,1673,2,Cassida
+51,1674,2,Cassida circumdata
+52,1675,2,Chaetocnema
+53,1676,2,Chaetocnema confinis
+54,1677,2,Coenobius
+55,1678,2,Coenobius glochidionis
+56,1679,2,Colasposoma
+57,1680,2,Colasposoma metallicum
+58,1681,2,Epitrix
+59,1682,2,Epitrix hirtipennis
+60,1683,2,Metriona
+61,1684,2,Oxycephala
+62,1685,2,Oxycephala pandani
+63,1686,2,Oxycephala spaethi
+64,1687,2,Pagria
+65,1688,2,Pagria signata
+66,1689,2,Phytorus
+67,1690,2,Phytorus lineolatus
+68,1691,2,Rhyparida
+69,1692,2,Rhyparida carolina
+70,1693,2,Coccinellidae
+71,1694,2,Epilachna
+72,1695,2,Epilachna philippinensis
+73,1696,2,Curculionidae
+74,1697,2,Aclees
+75,1698,2,Aclees porosus
+76,1699,2,Anaballus
+77,1700,2,Anaballus amplicollis
+78,1701,2,Atactus
+79,1702,2,Atactus deplanatus
+80,1703,2,Cryptorhynchus
+81,1704,2,Cryptorhynchus mangiferae
+82,1705,2,Cryptorhynchus postfasciatus
+83,1706,2,Daealus
+84,1707,2,Hypothenemus
+85,1708,2,Hypothenemus hampei
+86,1709,2,Nanyozo
+87,1710,2,Nanyozo viridilineatus
+88,1711,2,Nanyozo viridipictus
+89,1712,2,Rhabdoscelus
+90,1713,2,Rhabdoscelus asperipennis
+91,1714,2,Rhabdoscelus obscurus
+92,1715,2,Sphaeropterus
+93,1716,2,Sternochetus
+94,1717,2,Sternochetus mangiferae
+95,1718,2,Trigonops
+96,1719,2,Trigonops hirsuta
+97,1720,2,Trigonops inusitata
+98,1721,2,Trigonops vulgaris
+99,1722,2,Xyleborus
+100,1723,2,Xyleborus ferrugineus
+101,1724,2,Xyleborus fornicatus
+102,1725,2,Xyleborus morigerus
+103,1726,2,Xyleborus perforans
+104,1727,2,Xyleborus similis
+105,1728,2,Dryophthoridae
+106,1729,2,Cosmopolites
+107,1730,2,Cosmopolites sordidus
+108,1731,2,Diocalandra
+109,1732,2,Diocalandra frumenti
+110,1733,2,Polytus
+111,1734,2,Polytus mellerborgi
+112,1735,2,Sitophilus
+113,1736,2,Sitophilus oryzae
+114,1737,2,Trochorhopalus
+115,1738,2,Trochorhopalus strangulatus
+116,1739,2,Dynastidae
+117,1740,2,Anoronotum
+118,1741,2,Anoronotum rufum
+119,1742,2,Oryctes
+120,1743,2,Oryctes rhinoceros
+121,1744,2,Melolonthidae
+122,1745,2,Phyllophaga
+123,1746,2,Phyllophaga bipunctata
+124,1747,2,Rutelidae
+125,1748,2,Adoretus
+126,1749,2,Adoretus sinicus
+127,1750,2,Anomala
+128,1751,2,Anomala sulcatula
+129,1752,2,Tenebrionidae
+130,1753,2,Gonocephalum
+131,1754,2,Diptera
+132,1755,2,Agromyzidae
+133,1756,2,Liriomyza
+134,1757,2,Liriomyza brassicae
+135,1758,2,Liriomyza sativae
+136,1759,2,Liriomyza trifolii
+137,1760,2,Melanagromyza
+138,1761,2,Melanagromyza sojae
+139,1762,2,Ophiomyia
+140,1763,2,Ophiomyia phaseoli
+141,1764,2,Pseudonapomyza
+142,1765,2,Pseudonapomyza spicata
+143,1766,2,Tephritidae
+144,1767,2,Bactrocera
+145,1768,2,Bactrocera cucurbitae
+146,1769,2,Bactrocera frauenfeldi
+147,1770,2,Bactrocera ochrosiae
+148,1771,2,Bactrocera umbrosa
+149,1772,2,Euphranta
+150,1773,2,Euphranta lemniscata
+151,1774,2,Philophylla
+152,1775,2,Philophylla bisecta
+153,1776,2,Hemiptera
+154,1777,2,Aleyrodidae
+155,1778,2,Aleurocanthus
+156,1779,2,Aleurocanthus palauensis
+157,1780,2,Aleurocanthus spiniferus
+158,1781,2,Aleurodicus
+159,1782,2,Aleurodicus dispersus
+160,1783,2,Aleurothrixus
+161,1784,2,Aleurothrixus floccosus
+162,1785,2,Bemisia
+163,1786,2,Bemisia tabaci
+164,1787,2,Dialeurodes
+165,1788,2,Dialeurodes kirkaldyi
+166,1789,2,Neomaskellia
+167,1790,2,Neomaskellia bergii
+168,1791,2,Singhiella
+169,1792,2,Singhiella citrifolii
+170,1793,2,Xenaleyrodes
+171,1794,2,Xenaleyrodes artocarpi
+172,1795,2,Alydidae
+173,1796,2,Leptocorisa
+174,1797,2,Leptocorisa acuta
+175,1798,2,Aphididae
+176,1799,2,Aphis
+177,1800,2,Aphis aurantii
+178,1801,2,Aphis craccivora
+179,1802,2,Aphis gossypii
+180,1803,2,Aphis spiraecola
+181,1804,2,Astegopteryx
+182,1805,2,Astegopteryx rhapidis
+183,1806,2,Aulacophoroides
+184,1807,2,Cerataphis
+185,1808,2,Cerataphis lataniae
+186,1809,2,Lipaphis
+187,1810,2,Lipaphis erysimi
+188,1811,2,Myzus
+189,1812,2,Myzus persicae
+190,1813,2,Pentalonia
+191,1814,2,Pentalonia nigronervosa
+192,1815,2,Rhopalosiphum
+193,1816,2,Rhopalosiphum maidis
+194,1817,2,Aphrophoridae
+195,1818,2,Lallemandana
+196,1819,2,Lallemandana phalerata
+197,1820,2,Asterolecaniidae
+198,1821,2,Asterolecanium
+199,1822,2,Asterolecanium bambusae
+200,1823,2,Asterolecanium coronatum
+201,1824,2,Asterolecanium miliaris
+202,1825,2,Asterolecanium pseudolanceolatum
+203,1826,2,Asterolecanium pseudomiliaris
+204,1827,2,Asterolecanium pustulans
+205,1828,2,Asterolecanium robustum
+206,1829,2,Carsidaridae
+207,1830,2,Mesohomotoma
+208,1831,2,Mesohomotoma hibisci
+209,1832,2,Cicadellidae
+210,1833,2,Amrasca
+211,1834,2,Amrasca biguttula
+212,1835,2,Batrachomorphus
+213,1836,2,Batrachomorphus atrifrons
+214,1837,2,Cicadulina
+215,1838,2,Cicadulina bipunctella
+216,1839,2,Empoasca
+217,1840,2,Empoasca pitiensis
+218,1841,2,Exitianus
+219,1842,2,Exitianus capicola
+220,1843,2,Exitianus plebeius
+221,1844,2,Nephotettix
+222,1845,2,Nephotettix apicalis
+223,1846,2,Nesophrosyne
+224,1847,2,Nesophrosyne argentatus
+225,1848,2,Protalebrella
+226,1849,2,Protalebrella brasiliensis
+227,1850,2,Cixiidae
+228,1851,2,Myndus
+229,1852,2,Myndus bifurcatus
+230,1853,2,Myndus dibaphus
+231,1854,2,Myndus irreptor
+232,1855,2,Myndus palawanensis
+233,1856,2,Coccidae
+234,1857,2,Ceroplastes
+235,1858,2,Ceroplastes ceriferus
+236,1859,2,Ceroplastes destructor
+237,1860,2,Ceroplastes floridensis
+238,1861,2,Ceroplastes rubens
+239,1862,2,Coccus
+240,1863,2,Coccus hesperidum
+241,1864,2,Coccus longulus
+242,1865,2,Coccus moestus
+243,1866,2,Coccus viridis
+244,1867,2,Eucalymnatus
+245,1868,2,Eucalymnatus tessellatus
+246,1869,2,Kilifia
+247,1870,2,Kilifia acuminata
+248,1871,2,Kilifia deltoides
+249,1872,2,Milviscutulus
+250,1873,2,Milviscutulus mangiferae
+251,1874,2,Paralecanium
+252,1875,2,Paralecanium carolinensis
+253,1876,2,Parasaissetia
+254,1877,2,Parasaissetia nigra
+255,1878,2,Pulvinaria
+256,1879,2,Pulvinaria psidii
+257,1880,2,Saissetia
+258,1881,2,Saissetia coffeae
+259,1882,2,Saissetia miranda
+260,1883,2,Saissetia neglecta
+261,1884,2,Saissetia oleae
+262,1885,2,Vinsonia
+263,1886,2,Vinsonia stellifera
+264,1887,2,Coreidae
+265,1888,2,Leptoglossus
+266,1889,2,Leptoglossus gonagra
+267,1890,2,Physomerus
+268,1891,2,Physomerus grossipes
+269,1892,2,Delphacidae
+270,1893,2,Chloriona
+271,1894,2,Chloriona formosella
+272,1895,2,Nilaparvata
+273,1896,2,Nilaparvata lugens
+274,1897,2,Peregrinus
+275,1898,2,Peregrinus maidis
+276,1899,2,Perkinsiella
+277,1900,2,Perkinsiella thompsoni
+278,1901,2,Sogatella
+279,1902,2,Sogatella furcifera
+280,1903,2,Tarophagus
+281,1904,2,Tarophagus proserpina
+282,1905,2,Ugyops
+283,1906,2,Ugyops annulipes
+284,1907,2,Derbidae
+285,1908,2,Eusyphax
+286,1909,2,Eusyphax bivittatus
+287,1910,2,Flaccia
+288,1911,2,Flaccia dione
+289,1912,2,Lamenia
+290,1913,2,Lamenia caliginea
+291,1914,2,Lamenia numitor
+292,1915,2,Nesorhamma
+293,1916,2,Nesorhamma chalcas
+294,1917,2,Phaciocephalus
+295,1918,2,Phaciocephalus onoi
+296,1919,2,Proutista
+297,1920,2,Proutista moesta
+298,1921,2,Swezeyia
+299,1922,2,Swezeyia zephyra
+300,1923,2,Diaspididae
+301,1924,2,Andaspis
+302,1925,2,Andaspis punicae
+303,1926,2,Aonidiella
+304,1927,2,Aonidiella aurantii
+305,1928,2,Aonidiella citrina
+306,1929,2,Aonidiella comperei
+307,1930,2,Aonidiella eremocitri
+308,1931,2,Aonidiella inornata
+309,1932,2,Aonidiella orientalis
+310,1933,2,Aspidiella
+311,1934,2,Aspidiella sacchari
+312,1935,2,Aspidiotus
+313,1936,2,Aspidiotus destructor
+314,1937,2,Aspidiotus excisus
+315,1938,2,Aulacaspis
+316,1939,2,Aulacaspis madiunensis
+317,1940,2,Aulacaspis tegalensis
+318,1941,2,Chrysomphalus
+319,1942,2,Chrysomphalus aonidum
+320,1943,2,Chrysomphalus dictyospermi
+321,1944,2,Diaspis
+322,1945,2,Diaspis boisduvalii
+323,1946,2,Diaspis bromeliae
+324,1947,2,Duplaspidiotus
+325,1948,2,Duplaspidiotus tesseratus
+326,1949,2,Furcaspis
+327,1950,2,Furcaspis oceanica
+328,1951,2,Hemiberlesia
+329,1952,2,Hemiberlesia lataniae
+330,1953,2,Hemiberlesia palmae
+331,1954,2,Ischnaspis
+332,1955,2,Ischnaspis longirostris
+333,1956,2,Lepidosaphes
+334,1957,2,Lepidosaphes beckii
+335,1958,2,Lepidosaphes carolinensis
+336,1959,2,Lepidosaphes esakii
+337,1960,2,Lepidosaphes gloverii
+338,1961,2,Lepidosaphes laterochitinosa
+339,1962,2,Lepidosaphes palauensis
+340,1963,2,Lepidosaphes similis
+341,1964,2,Lepidosaphes tokionis
+342,1965,2,Melanaspis
+343,1966,2,Melanaspis bromiliae
+344,1967,2,Oceanaspidiotus
+345,1968,2,Oceanaspidiotus spinosus
+346,1969,2,Odonaspis
+347,1970,2,Odonaspis saccharicaulis
+348,1971,2,Parlatoria
+349,1972,2,Parlatoria cinerea
+350,1973,2,Parlatoria pergandii
+351,1974,2,Parlatoria proteus
+352,1975,2,Parlatoria ziziphi
+353,1976,2,Phenacaspis
+354,1977,2,Phenacaspis inday
+355,1978,2,Pinnaspis
+356,1979,2,Pinnaspis aspidistrae
+357,1980,2,Pinnaspis buxi
+358,1981,2,Pinnaspis strachani
+359,1982,2,Pseudaulacaspis
+360,1983,2,Pseudaulacaspis cockerelli
+361,1984,2,Pseudaulacaspis pentagona
+362,1985,2,Radionaspis
+363,1986,2,Radionaspis indica
+364,1987,2,Semelaspidus
+365,1988,2,Semelaspidus mangiferae
+366,1989,2,Unaspis
+367,1990,2,Unaspis citri
+368,1991,2,Dictyopharidae
+369,1992,2,Raivuna
+370,1993,2,Raivuna graminea
+371,1994,2,Dinidoridae
+372,1995,2,Megymenum
+373,1996,2,Megymenum affine
+374,1997,2,Issidae
+375,1998,2,Lygaeidae
+376,1999,2,Nysius
+377,2000,2,Nysius pulchellus
+378,2001,2,Oxycarenus
+379,2002,2,Oxycarenus bicolor
+380,2003,2,Margarodidae
+381,2004,2,Icerya
+382,2005,2,Icerya aegyptiaca
+383,2006,2,Icerya purchasi
+384,2007,2,Icerya seychellarum
+385,2008,2,Steatococcus
+386,2009,2,Steatococcus samaraius
+387,2010,2,Membracidae
+388,2011,2,Leptocentrus
+389,2012,2,Leptocentrus taurus
+390,2013,2,Miridae
+391,2014,2,Creontiades
+392,2015,2,Creontiades pacificus
+393,2016,2,Fulvius
+394,2017,2,Fulvius angustatus
+395,2018,2,Halticus
+396,2019,2,Halticus insularis
+397,2020,2,Halticus tibialis
+398,2021,2,Lygus
+399,2022,2,Lygus kusaiensis
+400,2023,2,Lygus trukensis
+401,2024,2,Nesidiocoris
+402,2025,2,Nesidiocoris tenuis
+403,2026,2,Proboscidocoris
+404,2027,2,Proboscidocoris malayus
+405,2028,2,Pseudoloxops
+406,2029,2,Pseudoloxops bifasciatus
+407,2030,2,Sthenaridea
+408,2031,2,Sthenaridea rufescens
+409,2032,2,Zanchius
+410,2033,2,Zanchius fragilis
+411,2034,2,Nogodinidae
+412,2035,2,Capelopterum
+413,2036,2,Pentatomidae
+414,2037,2,Alciphron
+415,2038,2,Alciphron glaucus
+416,2039,2,Nezara
+417,2040,2,Nezara viridula
+418,2041,2,Piezodorus
+419,2042,2,Piezodorus hybneri
+420,2043,2,Plataspidae
+421,2044,2,Brachyplatys
+422,2045,2,Brachyplatys insularis
+423,2046,2,Coptosoma
+424,2047,2,Coptosoma xanthogramma
+425,2048,2,Pseudococcidae
+426,2049,2,Antonina
+427,2050,2,Antonina graminis
+428,2051,2,Dysmicoccus
+429,2052,2,Dysmicoccus boninsis
+430,2053,2,Dysmicoccus brevipes
+431,2054,2,Dysmicoccus cocotis
+432,2055,2,Dysmicoccus neobrevipes
+433,2056,2,Ferrisia
+434,2057,2,Ferrisia virgata
+435,2058,2,Laminicoccus
+436,2059,2,Laminicoccus pandani
+437,2060,2,Laminicoccus pandanicola
+438,2061,2,Neosimmondsia
+439,2062,2,Neosimmondsia esakii
+440,2063,2,Palmicultor
+441,2064,2,Palmicultor guamensis
+442,2065,2,Palmicultor palmarum
+443,2066,2,Pandanicola
+444,2067,2,Pandanicola esakii
+445,2068,2,Pandanicola pandani
+446,2069,2,Phenacoccus
+447,2070,2,Phenacoccus madeirensis
+448,2071,2,Planococcus
+449,2072,2,Planococcus citri
+450,2073,2,Planococcus lilacinus
+451,2074,2,Pseudococcus
+452,2075,2,Pseudococcus cryptus
+453,2076,2,Pseudococcus longispinus
+454,2077,2,Pseudococcus macrocirculus
+455,2078,2,Pseudococcus marshallensis
+456,2079,2,Pseudococcus microadonidum
+457,2080,2,Pseudococcus orchidicola
+458,2081,2,Pseudococcus trukensis
+459,2082,2,Saccharicoccus
+460,2083,2,Saccharicoccus sacchari
+461,2084,2,Turbinococcus
+462,2085,2,Turbinococcus pandanicola
+463,2086,2,Ricaniidae
+464,2087,2,Armacia
+465,2088,2,Armacia clara
+466,2089,2,Triozidae
+467,2090,2,Leptynoptera
+468,2091,2,Leptynoptera sulfurea
+469,2092,2,Trioza
+470,2093,2,Trioza vitiensis
+471,2094,2,Tropiduchidae
+472,2095,2,Kallitaxila
+473,2096,2,Kallitaxila crini
+474,2097,2,Swezeyaria
+475,2098,2,Swezeyaria viridana
+476,2099,2,Isoptera
+477,2100,2,Kalotermitidae
+478,2101,2,Neotermes
+479,2102,2,Neotermes connexus
+480,2103,2,Neotermes kanehirae
+481,2104,2,Lepidoptera
+482,2105,2,Agonoxenidae
+483,2106,2,Agonoxena
+484,2107,2,Agonoxena pyrogramma
+485,2108,2,Batrachedridae
+486,2109,2,Batrachedra
+487,2110,2,Cosmopterigidae
+488,2111,2,Trissodoris
+489,2112,2,Trissodoris guamensis
+490,2113,2,Crambidae
+491,2114,2,Agathodes
+492,2115,2,Agathodes ostentalis
+493,2116,2,Cnaphalocrocis
+494,2117,2,Cnaphalocrocis exigua
+495,2118,2,Cnaphalocrocis trapezalis
+496,2119,2,Crocidolomia
+497,2120,2,Crocidolomia binotalis
+498,2121,2,Cryptographis
+499,2122,2,Cryptographis hyalinata
+500,2123,2,Cryptographis indica
+501,2124,2,Diaphania
+502,2125,2,Diaphania indica
+503,2126,2,Hellula
+504,2127,2,Hellula undalis
+505,2128,2,Lamprosema
+506,2129,2,Marasmia
+507,2130,2,Marasmia trapezalis
+508,2131,2,Maruca
+509,2132,2,Maruca testulalis
+510,2133,2,Nymphula
+511,2134,2,Omiodes
+512,2135,2,Omiodes diemenalis
+513,2136,2,Ostrinia
+514,2137,2,Ostrinia furnacalis
+515,2138,2,Paraponyx
+516,2139,2,Paraponyx fluctuosalis
+517,2140,2,Psara
+518,2141,2,Psara hipponalis
+519,2142,2,Geometridae
+520,2143,2,Anisodes
+521,2144,2,Anisodes illepidaria
+522,2145,2,Gracillariidae
+523,2146,2,Acrocercops
+524,2147,2,Phyllocnistis
+525,2148,2,Phyllocnistis citrella
+526,2149,2,Hesperiidae
+527,2150,2,Badamia
+528,2151,2,Badamia exclamationis
+529,2152,2,Erionota
+530,2153,2,Erionota thrax
+531,2154,2,Lycaenidae
+532,2155,2,Chilades
+533,2156,2,Edales
+534,2157,2,Edales pandava
+535,2158,2,Lampides
+536,2159,2,Lampides boeticus
+537,2160,2,Noctuidae
+538,2161,2,Acanthodelta
+539,2162,2,Acanthodelta janata
+540,2163,2,Anomis
+541,2164,2,Anomis erosa
+542,2165,2,Anomis flava
+543,2166,2,Anua
+544,2167,2,Anua coronata
+545,2168,2,Anua tongaensis
+546,2169,2,Chrysodeixis
+547,2170,2,Chrysodeixis chalcites
+548,2171,2,Grammodes
+549,2172,2,Grammodes geometrica
+550,2173,2,Helicoverpa
+551,2174,2,Helicoverpa armigera
+552,2175,2,Helicoverpa zea
+553,2176,2,Mythimna
+554,2177,2,Othreis
+555,2178,2,Othreis fullonia
+556,2179,2,Penicillaria
+557,2180,2,Penicillaria jocosatrix
+558,2181,2,Spodoptera
+559,2182,2,Spodoptera litura
+560,2183,2,Spodoptera mauritia
+561,2184,2,Tiracola
+562,2185,2,Tiracola plagiata
+563,2186,2,Nolidae
+564,2187,2,Earias
+565,2188,2,Earias vitella
+566,2189,2,Nymphalidae
+567,2190,2,Euploea
+568,2191,2,Euploea leucostictos
+569,2192,2,Hypolimnas
+570,2193,2,Hypolimnas bolina
+571,2194,2,Melanitis
+572,2195,2,Melanitis leda
+573,2196,2,Precis
+574,2197,2,Precis villida
+575,2198,2,Pantheidae
+576,2199,2,Papilionidae
+577,2200,2,Papilio
+578,2201,2,Papilio polytes
+579,2202,2,Phyllocnistidae
+580,2203,2,Plutellidae
+581,2204,2,Plutella
+582,2205,2,Plutella xylostella
+583,2206,2,Pterophoridae
+584,2207,2,Sphenarches
+585,2208,2,Sphenarches caffer
+586,2209,2,Pyralidae
+587,2210,2,Etiella
+588,2211,2,Etiella zinckenella
+589,2212,2,Satyridae
+590,2213,2,Sphingidae
+591,2214,2,Agrius
+592,2215,2,Agrius convolvuli
+593,2216,2,Hippotion
+594,2217,2,Hippotion celerio
+595,2218,2,Hippotion swinhoei
+596,2219,2,Protoparce
+597,2220,2,Theretra
+598,2221,2,Theretra nessus
+599,2222,2,Theretra pinastrina
+600,2223,2,Tortricidae
+601,2224,2,Adoxophyes
+602,2225,2,Adoxophyes fasciculana
+603,2226,2,Adoxophyes melia
+604,2227,2,Cryptophlebia
+605,2228,2,Cryptophlebia ombrodelta
+606,2229,2,Cryptophlebia peltastica
+607,2230,2,Dudua
+608,2231,2,Dudua aprobola
+609,2232,2,Strepsicrates
+610,2233,2,Strepsicrates ejectana
+611,2234,2,Yponomeutidae
+612,2235,2,Prays
+613,2236,2,Prays citri
+614,2237,2,Orthoptera
+615,2238,2,Acrididae
+616,2239,2,Aiolopus
+617,2240,2,Aiolopus thalassinus
+618,2241,2,Aiolopus thalassinus dubius
+619,2242,2,Locusta
+620,2243,2,Locusta migratoria
+621,2244,2,Oxya
+622,2245,2,Oxya hyla
+623,2246,2,Oxya japonica
+624,2247,2,Stenocatantops
+625,2248,2,Stenocatantops splendens
+626,2249,2,Valanga
+627,2250,2,Valanga excavata
+628,2251,2,Valanga nigricornis
+629,2252,2,Gryllidae
+630,2253,2,Teleogryllus
+631,2254,2,Teleogryllus oceanicus
+632,2255,2,Gryllotalpidae
+633,2256,2,Gryllotalpa
+634,2257,2,Pyrgomorphidae
+635,2258,2,Atractomorpha
+636,2259,2,Atractomorpha psittacina
+637,2260,2,Tettigoniidae
+638,2261,2,Conocephalus
+639,2262,2,Conocephalus longipennis
+640,2263,2,Euconocephalus
+641,2264,2,Euconocephalus nasutus
+642,2265,2,Phaneroptera
+643,2266,2,Phaneroptera furcifera
+644,2267,2,Segestes
+645,2268,2,Segestes unicolor
+646,2269,2,Phasmida
+647,2270,2,Phasmatidae
+648,2271,2,Acanthograeffea
+649,2272,2,Acanthograeffea denticulata
+650,2273,2,Acanthograeffea modesta
+651,2274,2,Megacrania
+652,2275,2,Megacrania batesii
+653,2276,2,Thysanoptera
+654,2277,2,Phlaeothripidae
+655,2278,2,Aleurodothrips
+656,2279,2,Aleurodothrips fasciapennis
+657,2280,2,Karnyothrips
+658,2281,2,Karnyothrips melaleucus
+659,2282,2,Thripidae
+660,2283,2,Bolacidothrips
+661,2284,2,Bolacidothrips orizae
+662,2285,2,Heliothrips
+663,2286,2,Heliothrips haemorrhoidalis
+664,2287,2,Selenothrips
+665,2288,2,Selenothrips rubrocinctus
+666,2289,2,Thrips
+667,2290,2,Thrips palmi
+668,2291,2,Thrips tabaci
+669,2292,2,Plantae
+670,2293,2,Tracheophyta
+671,2294,2,Cycadopsida
+672,2295,2,Cycadales
+673,2296,2,Cycadaceae
+674,2297,2,Cycas
+675,2298,2,Liliopsida
+676,2299,2,Alismatales
+677,2300,2,Araceae
+678,2301,2,Colocasia
+679,2302,2,Colocasia esculenta
+680,2303,2,Cyrtosperma
+681,2304,2,Arecales
+682,2305,2,Arecaceae
+683,2306,2,Areca
+684,2307,2,Cocos
+685,2308,2,Cocos nucifera
+686,2309,2,Asparagales
+687,2310,2,Amaryllidaceae
+688,2311,2,Allium
+689,2312,2,Allium cepa
+690,2313,2,Asparagaceae
+691,2314,2,Agave
+692,2315,2,Agave sisalana
+693,2316,2,Dioscoreales
+694,2317,2,Dioscoreaceae
+695,2318,2,Dioscorea
+697,2320,2,Pandanales
+698,2321,2,Pandanaceae
+699,2322,2,Pandanus
+700,2323,2,Poales
+701,2324,2,Bromeliaceae
+702,2325,2,Ananas
+703,2326,2,Ananas comosus
+704,2327,2,Poaceae
+705,2328,2,Bambusa
+706,2329,2,Cynodon
+707,2330,2,Oryza
+708,2331,2,Oryza sativa
+709,2332,2,Saccharum
+710,2333,2,Saccharum officinarum
+711,2334,2,Sorghum
+712,2335,2,Sorghum bicolor
+713,2336,2,Zea
+714,2337,2,Zea mays
+715,2338,2,Zingiberales
+716,2339,2,Zingiberaceae
+717,2340,2,Musa
+718,2341,2,Zingiber
+719,2342,2,Zingiber officinale
+720,2343,2,Magnoliopsida
+721,2344,2,Brassicales
+722,2345,2,Brassicaceae
+723,2346,2,Brassica
+724,2347,2,Raphanus
+725,2348,2,Raphanus sativus
+726,2349,2,Caricaceae
+727,2350,2,Carica
+728,2351,2,Carica papaya
+729,2352,2,Caryophyllales
+730,2353,2,Polygonaceae
+731,2354,2,Coccoloba
+732,2355,2,Cucurbitales
+733,2356,2,Cucurbitaceae
+734,2357,2,Fabales
+735,2358,2,Fabaceae
+736,2359,2,Erythrina
+737,2360,2,Erythrina variegata
+738,2361,2,Phaseolus
+739,2362,2,Psophocarpus
+740,2363,2,Psophocarpus tetragonolobus
+741,2364,2,Fagales
+742,2365,2,Casuarinaceae
+743,2366,2,Casuarina
+744,2367,2,Casuarina equisetifolia
+745,2368,2,Gentianales
+746,2369,2,Rubiaceae
+747,2370,2,Coffea
+748,2371,2,Laurales
+749,2372,2,Lauraceae
+750,2373,2,Persea
+751,2374,2,Persea americana
+752,2375,2,Magnoliales
+753,2376,2,Annonaceae
+754,2377,2,Annona
+755,2378,2,Malpighiales
+756,2379,2,Calophyllaceae
+757,2380,2,Calophyllum
+758,2381,2,Calophyllum inophyllum
+759,2382,2,Euphorbiaceae
+760,2383,2,Codiaeum
+761,2384,2,Codiaeum variegatum
+762,2385,2,Manihot
+763,2386,2,Manihot esculenta
+764,2387,2,Malvales
+765,2388,2,Malvaceae
+766,2389,2,Abelmoschus
+767,2390,2,Abelmoschus esculentus
+768,2391,2,Gossypium
+769,2392,2,Theobroma
+770,2393,2,Theobroma cacao
+771,2394,2,Myrtales
+772,2395,2,Combretaceae
+773,2396,2,Terminalia
+774,2397,2,Lythraceae
+775,2398,2,Punica
+776,2399,2,Punica granatum
+777,2400,2,Myrtaceae
+778,2401,2,Eugenia
+779,2402,2,Eugenia malaccensis
+780,2403,2,Psidium
+781,2404,2,Psidium guajava
+782,2405,2,Syzygium
+783,2406,2,Syzygium aqueum
+784,2407,2,Rosales
+785,2408,2,Moraceae
+786,2409,2,Artocarpus
+787,2410,2,Artocarpus altilis
+788,2411,2,Artocarpus heterophyllus
+789,2412,2,Ficus
+790,2413,2,Rosaceae
+791,2414,2,Rosa
+792,2415,2,Sapindales
+793,2416,2,Anacardiaceae
+794,2417,2,Mangifera
+795,2418,2,Mangifera indica
+796,2419,2,Rutaceae
+797,2420,2,Citrus
+798,2421,2,Solanales
+799,2422,2,Convolvulaceae
+800,2423,2,Ipomoea
+801,2424,2,Ipomoea batatas
+802,2425,2,Solanaceae
+803,2426,2,Capsicum
+804,2427,2,Solanum
+805,2428,2,Solanum lycopersicum
+806,2429,2,Solanum melongena
+807,2430,2,Solanum tuberosum
