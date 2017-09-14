@@ -193,24 +193,12 @@ db.define_table('name_type',
 '''
 name
 '''
-# db.define_table('name',
-#     Field('taxon', db.taxon),
-#     Field('name_type', db.name_type),
-#     Field('name'),
-#     format='%(name)s',
-# )
-
-
-'''
-name
-'''
 db.define_table('name',
     Field('taxon', db.taxon),
     Field('name_type', db.name_type),
     Field('name'),
     format='%(name)s',
 )
-
 
 
 '''
@@ -236,56 +224,56 @@ db.define_table('associate',
 )
 
 
-db.define_table('biblio_type',
-    Field('biblio_type'),
-    format='%(biblio_type)s'
-)
+# db.define_table('biblio_type',
+#     Field('biblio_type'),
+#     format='%(biblio_type)s'
+# )
 
 
-db.define_table('biblio',
-    Field('biblio_type', db.biblio_type),
-    Field('reference'),
-    Field('url'),
-    format='%(bibkey)s'
-)
+# db.define_table('biblio',
+#     Field('biblio_type', db.biblio_type),
+#     Field('reference'),
+#     Field('url'),
+#     format='%(bibkey)s'
+# )
 
 
-db.define_table('name_biblio',
-    Field('name1', db.name),
-    Field('biblio', db.biblio),
-)
+# db.define_table('name_biblio',
+#     Field('name1', db.name),
+#     Field('biblio', db.biblio),
+# )
 
 
 '''
 geo
 '''
-db.define_table('geo',
-    Field('name', unique=True),
-    Field('parent_name'),
-    Field('lineage', compute=lambda r: compute_geo_lineage(r['parent_name'], r['name'])),
-    format='%(name)s',
-)
-# For root nodes, parent_tid is NULL; otherwise parent_node must refer to an existing tid
-db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
-
-def compute_geo_lineage(parent_name, name):
-    rows = db(db.geo.name==parent_name).select(db.geo.lineage)
-    if len(rows) > 0:
-        s = '{}|{}'.format(rows[0]['lineage'], name)
-    else:
-        s = name
-    return s
+# db.define_table('geo',
+#     Field('name', unique=True),
+#     Field('parent_name'),
+#     Field('lineage', compute=lambda r: compute_geo_lineage(r['parent_name'], r['name'])),
+#     format='%(name)s',
+# )
+# # For root nodes, parent_tid is NULL; otherwise parent_node must refer to an existing tid
+# db.geo.parent_name.requires = IS_NULL_OR(IS_IN_DB(db, 'geo.name', '%(name)s'))
+#
+# def compute_geo_lineage(parent_name, name):
+#     rows = db(db.geo.name==parent_name).select(db.geo.lineage)
+#     if len(rows) > 0:
+#         s = '{}|{}'.format(rows[0]['lineage'], name)
+#     else:
+#         s = name
+#     return s
 
 
 '''
 distribution
 '''
-db.define_table('distribution',
-    Field('taxon', db.name),
-    Field('geo', db.geo),
-    Field('biblio', db.biblio),
-    Field('first_record', type='boolean')
-)
+# db.define_table('distribution',
+#     Field('taxon', db.name),
+#     Field('geo', db.geo),
+#     Field('biblio', db.biblio),
+#     Field('first_record', type='boolean')
+# )
 
 
 # -------------------------------------------------------------------------
@@ -327,3 +315,26 @@ def get_crops():
         order by taxon.lineage
         '''
     return db.executesql(sql, as_dict=True)
+
+
+def get_lineage(taxon_id):
+    sql = '''
+        select lineage 
+        from taxon
+        where id={}
+        '''.format(taxon_id)
+    res = db.executesql(sql, as_dict=True)
+    return res
+
+
+def get_vernacular_names(taxon_id):
+    sql = '''
+        select name
+        from name
+        where taxon={} and name_type in (4,6,7,8)
+        '''.format(taxon_id)
+    res = db.executesql(sql, as_dict=True)
+    if res:
+        return res
+    else:
+        return None

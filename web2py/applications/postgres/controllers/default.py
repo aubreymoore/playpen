@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 def index():
     return 'This is the index page.'
 
@@ -6,9 +7,9 @@ def pest_list(taxon_id):
     sql = '''SELECT *
              FROM taxon
              WHERE id IN
-                (SELECT t2
+                (SELECT taxon2
                  FROM associate
-                 WHERE t1={})
+                 WHERE taxon1={})
              ORDER BY lineage;'''.format(taxon_id)
     print sql
     return db.executesql(sql, as_dict=True)
@@ -48,7 +49,7 @@ def get_taxon_id(tid):
 
 
 def get_images(t1):
-    return db(db.image.t1==t1).select()
+    return db(db.image.taxon==t1).select()
 
 
 def test_get_images():
@@ -114,18 +115,12 @@ def crop_page():
             return None
 
     def get_synonyms(t1):
-        res = db(db.synonym2.t1==t1).select('name')
-        if res:
-            return res
-        else:
+        # res = db(db.synonym2.t1==t1).select('name')
+        # if res:
+        #     return res
+        # else:
             return None
 
-    # def get_vernacular_names(t1):
-    #     res = db(db.vernacular.t1==t1).select('name')
-    #     if res:
-    #         return res
-    #     else:
-    #         return None
 
     # def get_factsheets(t1):
     #     res = db(db.factsheet.t1==t1).select('url').first()
@@ -183,3 +178,58 @@ def populate_taxon_table():
 #         db.name.update_or_insert(taxon=row['id'], name=row['name'], name_type=2)
 #     aaa ='FINISHED'
 #     return locals()
+
+
+'''
+Populates the name table with English vernaculars from GBIF.
+'''
+def populate_name_table_vernacular():
+    import requests
+
+    sql = '''
+        select name as gbifid, taxon
+        from name
+        where name_type=1
+        '''
+    gbif_ids = db.executesql(sql, as_dict=True)
+    for gbif_id in gbif_ids:
+        gbifid = gbif_id['gbifid']
+        print gbifid
+        if gbifid.isdigit(): # tid is a GBIF id
+            url = 'http://api.gbif.org/v1/species/{}/vernacularNames'.format(gbifid)
+            mydict = requests.get(url).json()
+            for r in mydict['results']:
+                if r['language'] in ['eng','']:
+                    db.name.update_or_insert(
+                        name = r['vernacularName'],
+                        name_type = 7,
+                        taxon = gbif_id['taxon']
+                    )
+    return 'FINISHED'
+
+
+'''
+Populates the name table with scientific synonyms.
+'''
+def populate_name_table_synonyms():
+    import requests
+
+    sql = '''
+        select name as gbifid, taxon
+        from name
+        where name_type=1
+        '''
+    gbif_ids = db.executesql(sql, as_dict=True)
+    for gbif_id in gbif_ids:
+        gbifid = gbif_id['gbifid']
+        print gbifid
+        if gbifid.isdigit(): # tid is a GBIF id
+            url = 'http://api.gbif.org/v1/species/{}/synonyms'.format(gbifid)
+            mydict = requests.get(url).json()
+            for r in mydict['results']:
+                db.name.update_or_insert(
+                    name = r['scientificName'],
+                    name_type = 3,
+                    taxon = gbif_id['taxon']
+                    )
+    return 'FINISHED'

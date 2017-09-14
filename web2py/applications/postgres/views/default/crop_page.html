@@ -4,11 +4,11 @@
     <div class="jumbotron">
       <div class="media">
         <div class="media-left media-middle">
-          {{s=get_image(crop_info['id'])}}
-          {{if s:}}
-            <img src='{{=s['url']}}' width=192/>
+          {{ s=get_image(crop_info['id']) }}
+          {{ if s: }}
+            <img class="d-flex mr-3" src='{{=s['url']}}' width=192/>
           {{ else: }}
-            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
+            {{=A(IMG(_class='d-flex mr-3', _width=192, _src=URL('static/images', 'onepixel.jpg')))}}
           {{pass}}
         </div>
         <div class="media-body">
@@ -38,22 +38,24 @@
     </div>
 
     <ul class="media-list">
-      {{for pest in pests:}}
-      {{name = pest['name']}}
-      <li class="media">
-        <div class="media-left">
+
+      {{ for pest in pests:
+           name = pest['name'] }}
+
+      <div class="media">
+        <div class="media-left media-middle">
           {{s=get_image(pest['id'])}}
           {{if s:}}
-            <img src='{{=s['url']}}' width=192/>
+            <img class="d-flex mr-3" src='{{=s['url']}}' width=192/>
           {{else:}}
-            {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
+            {{=A(IMG(_class='d-flex mr-3', _width=192, _src=URL('static/images', 'onepixel.jpg')))}}
           {{pass}}
         </div>
         <div class="media-body">
           {{if pest['trank'] in ['genus', 'species', 'subspecies']:}}
-            <h3 class="media-heading"><i>{{=name}}</i></h3><br>
+            <h1 class="media-heading"><i>{{=name}}</i></h3><br>
           {{else:}}
-            <h3 class="media-heading">{{=name}}</h3><br>
+            <h1 class="media-heading">{{=name}}</h3><br>
           {{pass}}
 
           <p>
@@ -91,7 +93,7 @@
 
           <p><b>General information: </b>
           <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
-          <a href="https://demo.gbif.org/species/{{=pest['tid']}}"><button>GBIF {{=pest['tid']}}</button></a>
+          <a href="https://demo.gbif.org/species/{{=pest['id']}}"><button>GBIF {{=pest['id']}}</button></a>
           </p>
 
           <p><b>Search for images: </b>
@@ -115,7 +117,7 @@
           <button>anywhere(Bing)</button></a>
           </p>
         </div>
-      </li>
+      </div>
       <hr>
       {{ pass }}
     </ul>

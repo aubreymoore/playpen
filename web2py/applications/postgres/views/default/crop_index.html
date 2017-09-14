@@ -8,47 +8,51 @@
       Click on a <button>Pests</button> button to see the crop's pests.</p>
   </div>
 
-<ol>
+  <ul class="media-list">
+
     {{ crops = get_crops()
        for crop in crops:
           name = crop['name'] }}
-    <li>
-        <h4>{{=name}}</h4><br>
+
         <div class="media">
             <div class="media-left media-middle">
               {{s=get_image(crop['id'])}}
               {{if s:}}
-                <img src='{{=s['url']}}' width=192/>
+                <img class="d-flex mr-3" src='{{=s['url']}}' width=192/>
               {{ else: }}
-                {{=A(IMG(_width=256, _src=URL('static/images', 'onepixel.jpg')))}}
+                {{=A(IMG(_class='d-flex mr-3', _width=192, _src=URL('static/images', 'onepixel.jpg')))}}
               {{pass}}
             </div>
+
+            <div class="media-body">
+              {{ if crop['trank'] in ['genus', 'species', 'subspecies']: }}
+                <h1 class="media-heading"><i>{{=name}}</i></h1>
+              {{else:}}
+                <h1 class="media-heading">{{=name}}</h1>
+              {{pass}}
+              <p><b>Lineage: </b>{{=crop['lineage']}}</p>
+            <p>
+            <b>Vernacular names: </b>
+            {{ vnames = get_vernacular_names(crop['id']) }}
+            {{ if vnames: }}
+              {{ first = True }}
+              {{ for vname in vnames: }}
+                {{ if not first: }},{{ pass }} {{ first = False }}
+                {{ =XML(vname['name']) }}
+              {{ pass }}
+            {{ pass }}
+
+            </p>
+
+            <a href="crop_page/{{=crop['id']}}"><button>Pests</button></a>
+            <a href="https://www.bing.com/images/search?q={{=name}}"><button>Bing images</button></a>
+            <a href="https://en.wikipedia.org/wiki/{{=name}}"><button>Wikipedia</button></a>
+            <a href="http://www.gbif.org/species/{{#=crop['tid']}}"><button>GBIF {{#=crop['tid']}}</button></a>
+          </div>
         </div>
 
-        <p>
-        <b>Vernacular names: </b>
-        {{ #vnames = get_vernacular_names(crop['id']) }}
-        {{ #if vnames: }}
-          {{ #first = True }}
-          {{ #for vname in vnames: }}
-            {{ #if not first: }},{{ #pass }} {{ #first = False }}
-            {{ #=XML(vname['name']) }}
-          {{#pass}}
-        {{#pass}}
-
-        </p>
-        <p><b>Lineage: </b>{{#=crop['lineage']}}</p>
-
-        <a href="crop_page/{{=crop['id']}}"><button>Pests</button></a>
-        <a href="https://www.bing.com/images/search?q={{#=name}}"><button>Bing images</button></a>
-        <a href="https://en.wikipedia.org/wiki/{{#=name}}"><button>Wikipedia</button></a>
-        <a href="http://www.gbif.org/species/{{#=crop['tid']}}"><button>GBIF {{#=crop['tid']}}</button></a>
-        <br>
-        </li><br>
-
-    {{pass}}
-</ol>
-
+  <hr>
+  {{ pass }}
+</ul>
 </div>
-
 </body>
